@@ -39,7 +39,7 @@ hero:
 experience:
   - start: "2025-11"
     end: null
-    role: "安全研究员"
+    role: "保安研究员"
     company: "韩国信息技术团"
     company_url: null
     location: "果川, 韩国"
@@ -50,7 +50,7 @@ experience:
 
   - start: "2025-06"
     end: "2025-09"
-    role: "安全顾问"
+    role: "保安顾问"
     company: "BlueTeamK"
     company_url: null
     location: "首尔, 韩国"
@@ -62,7 +62,7 @@ experience:
 
   - start: "2024-12"
     end: "2025-03"
-    role: "渗透测试工程师"
+    role: "渗透测试渗透"
     company: "Fin Security"
     company_url: null
     location: "首尔, 韩国"
