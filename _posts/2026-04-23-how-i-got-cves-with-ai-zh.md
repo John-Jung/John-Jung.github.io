@@ -108,5 +108,5 @@ tags: [CVE, AI, 漏洞挖掘, Claude, 开源]
 
 ### 相关链接
 
-- **扫描器源代码**：[github.com/John-Jung/AI-CVE-Scanner](https://github.com/John-Jung/AI-CVE-Scanner)
+- **扫描器源代码**：[github.com/John-Jung/CVE-Hunter](https://github.com/John-Jung/CVE-Hunter)
 - **参考文章**：[用 $5 的提示词找到价值 $2,418 的漏洞](https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-en/)

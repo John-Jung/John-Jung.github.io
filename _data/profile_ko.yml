@@ -23,6 +23,9 @@ hero:
       - label: "GitHub"
         url: "https://github.com/John-Jung"
         icon: github
+      - label: "LinkedIn"
+        url: "https://www.linkedin.com/in/sungwuk-jung-1aa0a7218/"
+        icon: linkedin
       - label: "Blog"
         url: "/posts/"
         icon: rss
@@ -39,7 +42,7 @@ experience:
     role: "보안 연구원"
     company: "한국정보기술단"
     company_url: null
-    location: "서울, 대한민국"
+    location: "과천, 대한민국"
     bullets:
       - "주요 산업군 웹/모바일 모의해킹 및 레드팀 수행 — 정유사, 공공기관, 대학병원, 주요 기업"
       - "레드팀 업무 수행 및 1-day 취약점 활용"
@@ -69,6 +72,13 @@ experience:
       - "주요 정보통신 기반시설 보안 점검"
 
 projects:
+  - name: "CVE Hunter"
+    icon: "🤖"
+    url: "https://github.com/John-Jung/CVE-Hunter"
+    description: >
+      AI를 이용한 취약점 스캐너
+    tags: ["AI", "CVE", "Claude", "GPT"]
+
   - name: "RootRoot"
     icon: "🌱"
     url: "https://github.com/John-Jung/RootRoot"

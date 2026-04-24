@@ -108,5 +108,5 @@ Thank you for reading.
 
 ### Related Links
 
-- **Scanner source code**: [github.com/John-Jung/AI-CVE-Scanner](https://github.com/John-Jung/AI-CVE-Scanner)
+- **Scanner source code**: [github.com/John-Jung/CVE-Hunter](https://github.com/John-Jung/CVE-Hunter)
 - **The post that started it all**: [How I Found a $2,418 Vulnerabilities with a $5 Prompt](https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-en/)

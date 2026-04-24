@@ -42,7 +42,7 @@ experience:
     role: "Security Researcher"
     company: "Korea Information Systems Consulting & Audit Co., Ltd."
     company_url: null
-    location: "Seoul, Korea"
+    location: "Gwacheon, Korea"
     bullets:
       - "Penetration testing (web / mobile) and red teaming across critical sectors — oil refinery, government institutions, university hospitals, and major enterprise companies"
       - "Red teaming engagements and exploitation of 1-day vulnerabilities"
@@ -72,6 +72,13 @@ experience:
       - "Critical information infrastructure security evaluation"
 
 projects:
+  - name: "CVE Hunter"
+    icon: "🤖"
+    url: "https://github.com/John-Jung/CVE-Hunter"
+    description: >
+      AI-CVE-Scanner with AI API
+    tags: ["AI", "CVE", "Claude", "GPT"]
+
   - name: "RootRoot"
     icon: "🌱"
     url: "https://github.com/John-Jung/RootRoot"
