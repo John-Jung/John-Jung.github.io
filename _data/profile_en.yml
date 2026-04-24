@@ -2,7 +2,7 @@ labels:
   experience: "Work Experience"
   projects: "Projects"
   education: "Education"
-  ctf: "Awards"
+  awards: "Awards"
   vulnerabilities: "Disclosed Vulnerabilities & Bug Bounties"
   talks: "Talks"
   blog: "Blog Posts"
@@ -145,7 +145,7 @@ education:
     location: "Shanghai, China"
     note: ""
 
-ctf_awards:
+awards:
   - year: 2018
     entries:
       - place: "Prize"

@@ -101,8 +101,8 @@
         {% if d.vulnerabilities %}
         <li><a href="#vulns" class="toc-link">{{ d.labels.vulnerabilities | default: "Vulnerabilities" }}</a></li>
         {% endif %}
-        {% if d.ctf_awards %}
-        <li><a href="#awards" class="toc-link">{{ d.labels.ctf | default: "Awards" }}</a></li>
+        {% if d.awards %}
+        <li><a href="#awards" class="toc-link">{{ d.labels.awards | default: "Awards" }}</a></li>
         {% endif %}
         {% if d.projects %}
         <li><a href="#projects" class="toc-link">{{ d.labels.projects | default: "Projects" }}</a></li>
@@ -234,30 +234,30 @@
     </section>
     {% endif %}
 
-    <!-- Awards -->
-      {% if d.ctf_awards %}
-      <section id="awards" class="section">
-        <h2 class="section-title">{{ d.labels.ctf | default: "CTF Awards" }}</h2>
-        {% for group in d.ctf_awards %}
-        <div class="ctf-group">
-          <h3 class="ctf-year">{{ group.year }}</h3>
-          <div class="ctf-entries">
-            {% for entry in group.entries %}
-            <div class="ctf-entry">
-              <span class="ctf-place">{{ entry.place }}</span>
-              <span class="ctf-team">{{ entry.team }}</span>
-              <span class="ctf-event">{{ entry.event }}</span>
-              <span class="ctf-organizer">{{ entry.organizer }}</span>
-              {% if entry.award and entry.award != '' %}
-              <span class="ctf-award">{{ entry.award }}</span>
-              {% endif %}
-            </div>
-            {% endfor %}
+   <!-- Awards -->
+    {% if d.awards %}
+    <section id="awards" class="section">
+      <h2 class="section-title">{{ d.labels.awards | default: "Awards" }}</h2>
+      {% for group in d.awards %}
+      <div class="awards-group">
+        <h3 class="awards-year">{{ group.year }}</h3>
+        <div class="awards-entries">
+          {% for entry in group.entries %}
+          <div class="awards-entry">
+            <span class="awards-place">{{ entry.place }}</span>
+            <span class="awards-team">{{ entry.team }}</span>
+            <span class="awards-event">{{ entry.event }}</span>
+            <span class="awards-organizer">{{ entry.organizer }}</span>
+            {% if entry.award and entry.award != '' %}
+            <span class="awards-detail">{{ entry.award }}</span>
+            {% endif %}
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </section>
-      {% endif %}
+      </div>
+      {% endfor %}
+    </section>
+    {% endif %}
 
       <!-- Projects -->
       {% if d.projects %}

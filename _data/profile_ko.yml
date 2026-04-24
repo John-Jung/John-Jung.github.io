@@ -2,7 +2,7 @@ labels:
   experience: "경력"
   projects: "프로젝트"
   education: "학력"
-  ctf: "수상"
+  awards: "수상"
   vulnerabilities: "취약점 공개 & 버그바운티"
   talks: "발표"
   blog: "블로그"
@@ -14,7 +14,7 @@ hero:
   role: "Security Researcher"
   avatar: "/assets/profile.jpg"
   description: >
-    안녕하세요, 보안 연구원 정성욱입니다. 시스템을 분석하고 취약점을 찾아 더 안전하게 만드는 일에 열정을 가지고 있습니다. 현재 웹/모바일 모의해킹과 레드팀 업무에 집중하고 있으며, 항상 새로운 취약점을 탐색하고 보안의 경계를 넓혀가고 있습니다.
+    안녕하세요, 보안 연구원으로 활동하고 있는 정성욱입니다. 현재 웹/모바일 모의해킹과 레드팀 업무에 집중하고 있으며, 항상 새로운 취약점을 탐색하고 보안의 경계를 넓혀가고 있습니다.
   highlights:
     - "CVE — Claude와 함께 발견"
     - "KISA, 금융보안원, 파인더갭을 통한 다수의 KVE / FVE 취약점 제보"
@@ -142,7 +142,7 @@ education:
     location: "상하이, 중국"
     note: ""
 
-ctf_awards:
+awards:
   - year: 2018
     entries:
       - place: "수상"

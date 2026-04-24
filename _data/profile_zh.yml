@@ -2,7 +2,7 @@ labels:
   experience: "工作经历"
   projects: "项目"
   education: "教育背景"
-  ctf: "获奖"
+  awards: "获奖"
   vulnerabilities: "漏洞披露 & 漏洞赏金"
   talks: "演讲"
   blog: "博客"
@@ -142,7 +142,7 @@ education:
     location: "中国 上海"
     note: ""
 
-ctf_awards:
+awards:
   - year: 2018
     entries:
       - place: "获奖"
