@@ -19,7 +19,7 @@ tags: [CVE, AI, Bug Hunting, Claude, 오픈소스]
 
 | CVE ID | 대상 | 취약점 | 심각도 |
 |--------|------|--------|--------|
-| CVE-2026-26903 | TanStack Query (주간 5천만 DL) | DoS via Unbounded Recursion | Medium |
+| CVE-2026-26903 | TanStack Query (주간 5천만 다운로드) | DoS via Unbounded Recursion | Medium |
 | CVE-2026-25604 | Apache Airflow AWS Auth Manager | Host Header Injection | Medium |
 
 이 글은 "나도 할 수 있을까?" 고민하시는 분들께 **"야, 너두 할 수 있어"** 라고 말씀드리고 싶어서 쓰게 되었습니다.

@@ -469,3 +469,59 @@ body {
     transform: translateY(0);
   }
 }
+
+/* ============================================================
+   Tables
+   ============================================================ */
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.88rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.post-body th,
+.post-body td {
+  padding: 0.65rem 0.95rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.post-body th {
+  background: rgba(255, 255, 255, 0.03);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid var(--border);
+}
+
+.post-body tr:last-child td {
+  border-bottom: none;
+}
+
+.post-body tr:hover td {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+/* Code inside table cells — keep it readable, no huge padding */
+.post-body td code,
+.post-body th code {
+  font-size: 0.82rem;
+  padding: 0.1rem 0.35rem;
+}
+
+/* Horizontal scroll on narrow viewports */
+@media (max-width: 640px) {
+  .post-body table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
