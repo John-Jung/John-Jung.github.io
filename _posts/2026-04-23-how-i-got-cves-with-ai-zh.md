@@ -21,7 +21,7 @@ tags: [CVE, AI, 漏洞挖掘, Claude, 开源]
 | CVE-2026-26903 | TanStack Query（周下载 5000 万） | 无限递归导致的 DoS | Medium |
 | CVE-2026-25604 | Apache Airflow AWS Auth Manager | Host Header 注入 | Medium |
 
-这篇文章是写给那些在想"我也能做到吗？"的朋友们——因为答案是**"是的，你也可以"**。
+这篇文章是写给那些在想**我也能做到吗？** 的朋友们——因为答案是**是的，你也可以**。
 
 ---
 

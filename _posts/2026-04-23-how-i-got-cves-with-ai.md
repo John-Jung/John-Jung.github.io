@@ -21,7 +21,7 @@ Then, **using AI, I discovered vulnerabilities in TanStack Query (50 million wee
 | CVE-2026-26903 | TanStack Query (50M weekly DL) | DoS via Unbounded Recursion | Medium |
 | CVE-2026-25604 | Apache Airflow AWS Auth Manager | Host Header Injection | Medium |
 
-I wrote this post for anyone wondering "Could I actually do this?" — because the answer is **yes, you can.**
+I wrote this post for anyone wondering **Could I actually do this?** — because the answer is **yes, you can.**
 
 ---
 
