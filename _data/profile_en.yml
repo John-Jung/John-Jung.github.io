@@ -269,6 +269,6 @@ vulnerabilities:
 
 blog_posts:
   - title: "How an Ordinary Person Got CVEs by Following Elite Hackers (feat: HEY, you can do it too!)"
-    url: "http://127.0.0.1:4000/posts/how-i-got-cves-with-ai/"
+    url: "https://idont.kr/posts/how-i-got-cves-with-ai/"
     year: 2026
 
