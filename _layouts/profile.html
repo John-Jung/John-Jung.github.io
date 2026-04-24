@@ -13,6 +13,10 @@
   <script>
     (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
   </script>
+  <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ '/favicon-16x16.png' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon-32x32.png' | relative_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ '/apple-touch-icon.png' | relative_url }}">
 </head>
 <body class="page-profile">
 
@@ -282,23 +286,23 @@
       </section>
       {% endif %}
 
-      <!-- Talks -->
-      {% if d.talks %}
-      <section id="talks" class="section">
-        <h2 class="section-title">{{ d.labels.talks | default: "Talks" }}</h2>
-        <ul class="simple-list">
-          {% for talk in d.talks %}
-          <li class="simple-entry">
-            <div class="simple-meta">{{ talk.year }}</div>
-            <div class="simple-content">
-              {% if talk.url and talk.url != '' %}<a href="{{ talk.url }}" target="_blank" rel="noopener" class="entry-title">{{ talk.title }}</a>{% else %}<span class="entry-title">{{ talk.title }}</span>{% endif %}
-              <span class="entry-sub">{{ talk.conference }}</span>
-            </div>
-          </li>
-          {% endfor %}
-        </ul>
-      </section>
-      {% endif %}
+     <!-- Certifications -->
+    {% if d.certifications %}
+    <section id="certifications" class="section">
+      <h2 class="section-title">{{ d.labels.certifications | default: "Certifications" }}</h2>
+      <ul class="simple-list">
+        {% for cert in d.certifications %}
+        <li class="simple-entry">
+          <div class="simple-meta">{{ cert.year }}</div>
+          <div class="simple-content">
+            {% if cert.url and cert.url != '' %}<a href="{{ cert.url }}" target="_blank" rel="noopener" class="entry-title">{{ cert.title }}</a>{% else %}<span class="entry-title">{{ cert.title }}</span>{% endif %}
+            <span class="entry-sub">{{ cert.issuer }}</span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
 
       <!-- Blog Posts -->
       {% if d.blog_posts %}

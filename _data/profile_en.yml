@@ -6,7 +6,7 @@ labels:
   vulnerabilities: "Disclosed Vulnerabilities & Bug Bounties"
   talks: "Talks"
   blog: "Blog Posts"
-  skills: "Technical Skills"
+  certifications: "Certifications"
   present: "Present"
 
 hero:
@@ -265,7 +265,11 @@ vulnerabilities:
     description: ""
     links: []
 
-#talks: []
+certifications:
+  - year: "2025"
+    title: "Engineer Information Processing"
+    issuer: "HRD Korea"
+    url: ""
 
 blog_posts:
   - title: "How an Ordinary Person Got CVEs by Following Elite Hackers (feat: HEY, you can do it too!)"

@@ -6,7 +6,7 @@ labels:
   vulnerabilities: "취약점 공개 & 버그바운티"
   talks: "발표"
   blog: "블로그"
-  skills: "기술 스택"
+  certifications: "자격증"
   present: "현재"
 
 hero:
@@ -259,9 +259,13 @@ vulnerabilities:
     description: ""
     links: []
 
-#talks: []
+certifications:
+  - year: "2025"
+    title: "정보처리기사"
+    issuer: "한국산업인력공단"
+    url: ""
 
 blog_posts:
   - title: "평범한 사람인 내가 1류 해커를 따라해서 CVE를 발급 받은 경험(부제:야! 너두 할 수 있어)"
-    url: "https://idont.kr/posts/how-i-got-cves-with-ai/"
+    url: "https://idont.kr/ko/posts/how-i-got-cves-with-ai/"
     year: 2026

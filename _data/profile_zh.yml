@@ -6,7 +6,7 @@ labels:
   vulnerabilities: "漏洞披露 & 漏洞赏金"
   talks: "演讲"
   blog: "博客"
-  skills: "技术栈"
+  certifications: "资格证书"
   present: "至今"
 
 hero:
@@ -258,9 +258,13 @@ vulnerabilities:
     description: ""
     links: []
 
-#talks: []
+certifications:
+  - year: "2025"
+    title: "信息处理技士"
+    issuer: "韩国产业人力公团"
+    url: ""
 
 blog_posts:
   - title: "一个普通人模仿顶级黑客获得 CVE 的经历 (副标题：你也得做到！)"
-    url: "https://idont.kr/posts/how-i-got-cves-with-ai/"
+    url: "https://idont.kr/zh/posts/how-i-got-cves-with-ai/"
     year: 2026
