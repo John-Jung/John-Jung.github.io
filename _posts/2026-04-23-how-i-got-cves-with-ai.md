@@ -82,7 +82,7 @@ I restructured the scanner into a multi-phase pipeline:
 
 I also added a file priority scoring system. Files with HTTP route handlers (`app.get()`, `@PostMapping`) and user input patterns (`req.body`, `request.form`) got boosted. Test files, config files, and dev-only code got filtered out automatically.
 
-This cut the false positive rate significantly. But there was still a fundamental problem that v2 couldn't solve...
+This cut the false positive rate significantly. But there was still a fundamental problem that v2 couldn't solve.
 
 ---
 
@@ -117,7 +117,7 @@ Then **every subsequent phase uses this trust context.** The recon prompt asks d
 
 #### How I Actually Built It
 
-I'll be honest: **I didn't write most of the code by hand.**
+**I didn't write most of the code by hand.**
 
 My workflow was:
 
