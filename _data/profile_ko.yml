@@ -1,7 +1,7 @@
 labels:
   experience: "경력"
   projects: "프로젝트"
-  education: "학력"
+  education: "교육"
   awards: "수상"
   vulnerabilities: "취약점 공개 & 버그바운티"
   talks: "발표"
@@ -27,7 +27,7 @@ hero:
         url: "https://www.linkedin.com/in/sungwuk-jung-1aa0a7218/"
         icon: linkedin
       - label: "Blog"
-        url: "/posts/"
+        url: "/ko/posts/"
         icon: rss
       - label: "Velog"
         url: "https://velog.io/@wearetheone/posts"

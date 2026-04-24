@@ -2,6 +2,7 @@
 {% assign lang = page.lang | default: 'en' %}
 {% assign key  = 'profile_' | append: lang %}
 {% assign d    = site.data[key] %}
+{% include lang_paths.html %}
 <html lang="{{ lang }}" data-theme="auto">
 <head>
   <meta charset="UTF-8">
@@ -34,9 +35,9 @@
   <!-- ── Top-right controls ───────────────────────────────── -->
   <div class="top-controls">
     <nav class="lang-switcher" aria-label="Language">
-      <a href="/"    {% if lang == 'en' %}class="active"{% endif %}>EN</a>
+      <a href="/en"    {% if lang == 'en' %}class="active"{% endif %}>EN</a>
       <span class="sep">|</span>
-      <a href="/ko/" {% if lang == 'ko' %}class="active"{% endif %}>KO</a>
+      <a href="/" {% if lang == 'ko' %}class="active"{% endif %}>KO</a>
       <span class="sep">|</span>
       <a href="/zh/" {% if lang == 'zh' %}class="active"{% endif %}>中</a>
     </nav>

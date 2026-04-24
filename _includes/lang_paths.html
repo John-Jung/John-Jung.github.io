@@ -1,0 +1,10 @@
+{% if lang == 'ko' %}
+  {% assign home_path = '/' %}
+  {% assign posts_path = '/ko/posts/' %}
+{% elsif lang == 'zh' %}
+  {% assign home_path = '/zh/' %}
+  {% assign posts_path = '/zh/posts/' %}
+{% else %}
+  {% assign home_path = '/en/' %}
+  {% assign posts_path = '/en/posts/' %}
+{% endif %}

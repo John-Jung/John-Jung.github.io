@@ -20,3 +20,6 @@ exclude:
   - Gemfile.lock
   - vendor/
   - assets/CNAME
+
+plugins:
+  - jekyll-redirect-from

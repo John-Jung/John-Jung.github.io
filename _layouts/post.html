@@ -4,9 +4,7 @@
 {% assign d    = site.data[key] %}
 {% comment %} Extract post slug from URL: /ko/posts/example-post/ → example-post {% endcomment %}
 {% assign post_slug = page.url | split: '/posts/' | last | remove: '/' %}
-{% if lang == 'ko' %}{% assign posts_path = '/ko/posts/' %}
-{% elsif lang == 'zh' %}{% assign posts_path = '/zh/posts/' %}
-{% else %}{% assign posts_path = '/posts/' %}{% endif %}
+{% include lang_paths.html %}
 <html lang="{{ lang }}" data-theme="auto">
 <head>
   <meta charset="UTF-8">
@@ -41,7 +39,7 @@
   <!-- ── Top-right controls ───────────────────────────────── -->
   <div class="top-controls">
     <nav class="lang-switcher" aria-label="Language">
-      <a href="/posts/{{ post_slug }}/"    {% if lang == 'en' %}class="active"{% endif %}>EN</a>
+      <a href="/en/posts/{{ post_slug }}/"    {% if lang == 'en' %}class="active"{% endif %}>EN</a>
       <span class="sep">|</span>
       <a href="/ko/posts/{{ post_slug }}/" {% if lang == 'ko' %}class="active"{% endif %}>KO</a>
       <span class="sep">|</span>

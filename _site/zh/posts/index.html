@@ -3,6 +3,7 @@
 
 
 
+
 <html lang="zh" data-theme="auto">
 <head>
   <meta charset="UTF-8">
@@ -11,18 +12,34 @@
   <meta name="description" content="Blog posts by 郑圣煜">
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="/assets/blog.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <script>
     (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
   </script>
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/zh/posts/">
+  <meta property="og:title" content="Blog — 郑圣煜">
+  <meta property="og:description" content="Blog posts by 郑圣煜">
+  <meta property="og:image" content="http://localhost:4000/android-chrome-512x512.png">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Blog — 郑圣煜">
+  <meta name="twitter:description" content="Blog posts by 郑圣煜">
+  <meta name="twitter:image" content="http://localhost:4000/android-chrome-512x512.png">
 </head>
 <body>
 
   <!-- ── Top-right controls ───────────────────────────────── -->
   <div class="top-controls">
     <nav class="lang-switcher" aria-label="Language">
-      <a href="/posts/"    >EN</a>
+      <a href="/en/posts/" >EN</a>
       <span class="sep">|</span>
-      <a href="/ko/posts/" >KO</a>
+      <a href="/ko/posts/"    >KO</a>
       <span class="sep">|</span>
       <a href="/zh/posts/" class="active">中</a>
     </nav>

@@ -3,6 +3,7 @@
 
 
 
+
 <html lang="ko" data-theme="auto">
 <head>
   <meta charset="UTF-8">
@@ -11,18 +12,34 @@
   <meta name="description" content="Blog posts by 정성욱">
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="/assets/blog.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <script>
     (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
   </script>
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/ko/posts/">
+  <meta property="og:title" content="Blog — 정성욱">
+  <meta property="og:description" content="Blog posts by 정성욱">
+  <meta property="og:image" content="http://localhost:4000/android-chrome-512x512.png">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Blog — 정성욱">
+  <meta name="twitter:description" content="Blog posts by 정성욱">
+  <meta name="twitter:image" content="http://localhost:4000/android-chrome-512x512.png">
 </head>
 <body>
 
   <!-- ── Top-right controls ───────────────────────────────── -->
   <div class="top-controls">
     <nav class="lang-switcher" aria-label="Language">
-      <a href="/posts/"    >EN</a>
+      <a href="/en/posts/" >EN</a>
       <span class="sep">|</span>
-      <a href="/ko/posts/" class="active">KO</a>
+      <a href="/ko/posts/"    class="active">KO</a>
       <span class="sep">|</span>
       <a href="/zh/posts/" >中</a>
     </nav>
@@ -39,7 +56,7 @@
   <!-- ── Blog header ──────────────────────────────────────── -->
   <div class="blog-container">
     <header class="blog-header">
-      <a href="/ko/" class="blog-back-link">← 정성욱</a>
+      <a href="/" class="blog-back-link">← 정성욱</a>
       <h1 class="blog-title">Blog</h1>
     </header>
 

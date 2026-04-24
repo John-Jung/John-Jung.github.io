@@ -4,7 +4,7 @@ title: "How an Ordinary Person Got CVEs by Following Elite Hackers (feat: HEY, y
 description: "How I used AI to find vulnerabilities in TanStack Query and Apache Airflow and actually got CVEs assigned. Yes, you can do it too."
 date: 2026-04-23
 lang: en
-permalink: /posts/how-i-got-cves-with-ai/
+permalink: /en/posts/how-i-got-cves-with-ai/
 tags: [CVE, AI, Bug Hunting, Claude, Open Source]
 ---
 

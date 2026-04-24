@@ -27,7 +27,7 @@ hero:
         url: "https://www.linkedin.com/in/sungwuk-jung-1aa0a7218/"
         icon: linkedin
       - label: "Blog"
-        url: "/posts/"
+        url: "/en/posts/"
         icon: rss
       - label: "Velog"
         url: "https://velog.io/@wearetheone/posts"

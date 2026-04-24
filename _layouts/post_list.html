@@ -3,6 +3,7 @@
 {% assign key  = 'profile_' | append: lang %}
 {% assign d    = site.data[key] %}
 {% assign posts = site.posts | where: "lang", lang %}
+{% include lang_paths.html %}
 <html lang="{{ lang }}" data-theme="auto">
 <head>
   <meta charset="UTF-8">
@@ -36,9 +37,9 @@
   <!-- ── Top-right controls ───────────────────────────────── -->
   <div class="top-controls">
     <nav class="lang-switcher" aria-label="Language">
-      <a href="/posts/"    {% if lang == 'en' %}class="active"{% endif %}>EN</a>
+      <a href="/en/posts/" {% if lang == 'en' %}class="active"{% endif %}>EN</a>
       <span class="sep">|</span>
-      <a href="/ko/posts/" {% if lang == 'ko' %}class="active"{% endif %}>KO</a>
+      <a href="/ko/posts/"    {% if lang == 'ko' %}class="active"{% endif %}>KO</a>
       <span class="sep">|</span>
       <a href="/zh/posts/" {% if lang == 'zh' %}class="active"{% endif %}>中</a>
     </nav>
@@ -55,7 +56,7 @@
   <!-- ── Blog header ──────────────────────────────────────── -->
   <div class="blog-container">
     <header class="blog-header">
-      <a href="{% if lang == 'en' %}/{% elsif lang == 'ko' %}/ko/{% else %}/zh/{% endif %}" class="blog-back-link">← {{ d.hero.name }}</a>
+      <a href="{{ home_path }}" class="blog-back-link">← {{ d.hero.name }}</a>
       <h1 class="blog-title">Blog</h1>
     </header>
 
