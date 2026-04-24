@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html lang="ko" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>평범한 사람인 내가 1류 해커를 따라해서 CVE를 발급 받은 경험(부제:야! 너두 할 수 있어) — 정성욱</title>
+  <meta name="description" content="AI를 활용해서 TanStack Query와 Apache Airflow에서 취약점을 발견하고 CVE를 발급받은 이야기.">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/blog.css">
+  <link rel="stylesheet" href="/assets/syntax.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+
+  <!-- ── Top-right controls ───────────────────────────────── -->
+  <div class="top-controls">
+    <nav class="lang-switcher" aria-label="Language">
+      <a href="/posts/how-i-got-cves-with-ai/"    >EN</a>
+      <span class="sep">|</span>
+      <a href="/ko/posts/how-i-got-cves-with-ai/" class="active">KO</a>
+      <span class="sep">|</span>
+      <a href="/zh/posts/how-i-got-cves-with-ai/" >中</a>
+    </nav>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ── Post header (full width, above TOC+body split) ──── -->
+  <div class="post-container">
+    <a href="/ko/posts/" class="post-back-link">← Blog</a>
+
+    <header class="post-header">
+      
+      <div class="post-header-tags">
+        <span class="post-tag">CVE</span><span class="post-tag">AI</span><span class="post-tag">Bug Hunting</span><span class="post-tag">Claude</span><span class="post-tag">오픈소스</span>
+      </div>
+      
+      <h1 class="post-title">평범한 사람인 내가 1류 해커를 따라해서 CVE를 발급 받은 경험(부제:야! 너두 할 수 있어)</h1>
+      <div class="post-meta">
+        <img src="/assets/profile.jpg" alt="정성욱" class="post-avatar" width="28" height="28">
+        <span class="post-author">정성욱</span>
+        <span class="post-meta-sep">&middot;</span>
+        <time datetime="2026-04-23">Apr 23, 2026</time>
+        
+        
+        
+        <span class="post-meta-sep">&middot;</span>
+        <span class="post-read-time">2 min read</span>
+      </div>
+    </header>
+  </div>
+
+  <!-- ── Body: TOC sidebar + Article ─────────────────────── -->
+  <div class="post-page-body">
+
+    <nav class="post-toc" id="post-toc" aria-label="Table of contents">
+      <!-- auto-generated from h2/h3 by post-toc.js -->
+    </nav>
+
+    <article class="post-main" id="post-main">
+      <div class="post-body">
+        <h2 id="들어가며">들어가며</h2>
+
+<p>저는 지극히 평범한 사람입니다.</p>
+
+<p>컴퓨터과학 전공이긴 하지만, 졸업 전까지 보안 관련은 경험은 Zero, 작년 이맘때(25년 4월)만 해도 KISA에 운 좋게 Stored XSS 하나 제보한 게 전부였습니다.</p>
+
+<p>그런데 <strong>AI를 활용해서 주간 다운로드 5천만 회의 npm 패키지(TanStack Query)와 Apache Airflow 같은 거대 오픈소스에서 취약점을 발견하고, 실제로 CVE를 발급받았습니다.</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>CVE ID</th>
+      <th>대상</th>
+      <th>취약점</th>
+      <th>심각도</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CVE-2026-26903</td>
+      <td>TanStack Query (주간 5천만 DL)</td>
+      <td>DoS via Unbounded Recursion</td>
+      <td>Medium</td>
+    </tr>
+    <tr>
+      <td>CVE-2026-25604</td>
+      <td>Apache Airflow AWS Auth Manager</td>
+      <td>Host Header Injection</td>
+      <td>Medium</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>이 글은 “나도 할 수 있을까?” 고민하시는 분들께 <strong>“야, 너두 할 수 있어”</strong> 라고 말씀드리고 싶어서 쓰게 되었습니다.</p>
+
+<hr />
+
+<h2 id="시작-인터넷에서-오아시스를-발견하다">시작: 인터넷에서 오아시스를 발견하다</h2>
+
+<p>시작은 윤석찬님의 블로그 글이었습니다.</p>
+
+<blockquote>
+  <p><a href="https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-ko/">$5짜리 프롬프트로 $2,418짜리 취약점 찾은 썰</a></p>
+</blockquote>
+
+<p>이 글을 정말 n번은 정독했습니다. 이해가 안 되면 Claude한테 읽히고 설명시키고를 반복</p>
+
+<p>이 자리를 빌려 윤석찬님께 진심으로 감사의 말씀을 드립니다.</p>
+
+<hr />
+
+<h2 id="난-무엇을-어떻게-했나">난 무엇을, 어떻게 했나?</h2>
+
+<h3 id="도구-claude-pro--claude-api">도구: Claude Pro + Claude API</h3>
+
+<p>특별한 도구는 없었습니다. <strong>Claude Pro 구독과 Claude API</strong>, 이 두 가지만 사용했습니다.</p>
+
+<h3 id="step-1-스캐너-만들기">Step 1: 스캐너 만들기</h3>
+
+<p>윤석찬님의 글을 토대로 Claude에게 취약점 스캐너를 만들라고 지시했습니다. 처음엔 단순한 구조(v1)로 시작해서 오탐(False Positive)을 줄여가며 <strong>v3까지 발전</strong>시켰습니다.</p>
+
+<p>핵심은 <strong>Trust Boundary Analysis(신뢰 경계 분석)</strong> 였습니다. 예를 들어, 라이브러리의 함수가 위험해 보여도 개발자가 직접 호출하는 API라면 그건 취약점이 아닙니다. 이 구분을 자동화한 것이 스캐너 v3의 핵심이었습니다.</p>
+
+<h3 id="step-2-닥치는-대로-스캔하기">Step 2: 닥치는 대로 스캔하기</h3>
+
+<p>Spring, npm 등 유명한 오픈소스들을 다운로드 수 순으로 정렬한 다음, 하나하나 <code class="language-plaintext highlighter-rouge">git clone</code> → 스캔을 반복했습니다.</p>
+
+<p><strong>총 100개 이상의 리포지토리를 스캔</strong>했고, 26년 1월 한 달을 통째로 투자했습니다.</p>
+
+<h3 id="step-3-llm으로-최종-검토">Step 3: LLM으로 최종 검토</h3>
+
+<p>스캐너 결과(XML)와 실제 소스코드를 Claude에게 함께 던져서 오탐인지 아닌지 최종 검토시켰습니다. 자동화된 결과를 맹신하지 않고, LLM을 <strong>2차 검증관</strong>으로 활용한 셈이죠.</p>
+
+<h3 id="step-4-리포트-작성--제출">Step 4: 리포트 작성 &amp; 제출</h3>
+
+<p>리포트 작성도 다른 사람들의 CVE 리포트를 Claude에게 학습시켜서 작성했습니다. 증적(PoC 스크린샷, 코드) 이외의 부분은 거의 Claude가 작성하고 저는 검토만 했습니다.</p>
+
+<h3 id="결과">결과</h3>
+
+<ul>
+  <li><strong>제출한 리포트</strong>: 4건</li>
+  <li><strong>인정받은 CVE</strong>: 2건</li>
+  <li><strong>소요 기간</strong>: 약 1개월 (26년 1월)</li>
+  <li><strong>API 비용</strong>: 약 7만원 (Claude Pro 구독 비용 별도)</li>
+</ul>
+
+<p>100개 넘는 리포를 스캔해서 4개를 제출하고, 그중 2개가 인정받았습니다. 생각보다 확률이 매우 낮습니다. 하지만 그 2개가 진짜 CVE가 되었습니다.</p>
+
+<hr />
+
+<h2 id="insight-ai를-잘-쓰는-사람이-되자">Insight: AI를 잘 쓰는 사람이 되자</h2>
+
+<p>저는 AI 이전에 CVE를 찾아본 경험이 없는 사람입니다. 그래서 이전 분들이 도대체 어떤 사고 과정으로 취약점을 찾는지 감도 못 잡았습니다.</p>
+
+<p>그런데 대AI시대에는 <strong>저 같은 평범한 사람도 CVE를 발급받을 수 있다는 것</strong>을 직접 증명했습니다.</p>
+
+<p>솔직히 기분이 좋기도 하고, 이제 막 신입인데 AI로 대체될까 봐 두렵기도 합니다.</p>
+
+<p>하지만 한 달간 이 작업을 하면서 확실히 느낀 점이 있습니다.</p>
+
+<p><strong>AI도 만능이 아닙니다. 사용자의 능력만큼만 발휘됩니다.</strong></p>
+
+<p>질문이 바보 같으면 대답도 바보같고, 똑똑하게 하면 똑똑한 답변이 돌아옵니다. 아마 AI를 써보신 분들이라면 모두 공감하실 거예요.</p>
+
+<p>결국 AI는 도구이고, <strong>그 도구를 잘 쓰는 사람이 되는 것</strong>이 중요하다고 생각합니다.</p>
+
+<hr />
+
+<h2 id="마치며">마치며</h2>
+
+<p>저는 어쩌다 보니 해킹/보안을 남들보다 조금 늦게 시작한 사람입니다. 졸업하고 나서야 본격적으로 시작했으니까요.</p>
+
+<p>작년 이맘때(25년 4월)만 해도 KISA에 운으로 Stored XSS 하나 제보한 것 외에는 별다른 성과가 없었습니다. 그 후로 제야의 고수들을 직접 찾아뵙고 스터디하며, 버그바운티에도 조금씩 성과를 이루었습니다.</p>
+
+<p>올해 연초(26년 1월) 목표는 <strong>“기필코 CVE를 발급받겠다!”</strong> 였고, 어찌저찌 우당탕탕 하다보니 얻어 걸리는거 같습니다.</p>
+
+<p><strong>이 글이 저 같이 평범한 사람들에게 조금이나마 도움이 되었으면 합니다.</strong></p>
+
+<p>여기까지 읽어주셔서 감사합니다.</p>
+
+<hr />
+
+<h3 id="관련-링크">관련 링크</h3>
+
+<ul>
+  <li><strong>스캐너 소스코드</strong>: <a href="https://github.com/John-Jung/AI-CVE-Scanner">github.com/John-Jung/AI-CVE-Scanner</a></li>
+  <li><strong>참고한 글</strong>: <a href="https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-ko/">$5짜리 프롬프트로 $2,418짜리 취약점 찾은 썰</a></li>
+</ul>
+
+      </div>
+
+      <footer class="post-footer">
+        <a href="/ko/posts/" class="post-back-link">← Back to all posts</a>
+      </footer>
+    </article>
+
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>&copy; 2026 정성욱 &middot; <a href="mailto:sungwuk98@gmail.com">sungwuk98@gmail.com</a></p>
+  </footer>
+
+  <script src="/assets/script.js"></script>
+  <script src="/assets/post-toc.js"></script>
+</body>
+</html>

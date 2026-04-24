@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+{% assign lang = page.lang | default: 'en' %}
+{% assign key  = 'profile_' | append: lang %}
+{% assign d    = site.data[key] %}
+<html lang="{{ lang }}" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ d.hero.name }} — {{ d.hero.role }}</title>
+  <meta name="description" content="{{ d.hero.description | strip_newlines | truncate: 160 }}">
+  <link rel="stylesheet" href="/assets/style.css">
+  <!-- Apply saved theme before paint to prevent flash -->
+  <script>
+    (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body class="page-profile">
+
+  <!-- ── Top-right controls ───────────────────────────────── -->
+  <div class="top-controls">
+    <nav class="lang-switcher" aria-label="Language">
+      <a href="/"    {% if lang == 'en' %}class="active"{% endif %}>EN</a>
+      <span class="sep">|</span>
+      <a href="/ko/" {% if lang == 'ko' %}class="active"{% endif %}>KO</a>
+      <span class="sep">|</span>
+      <a href="/zh/" {% if lang == 'zh' %}class="active"{% endif %}>中</a>
+    </nav>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+      <!-- Sun icon (shown in dark mode → click to go light) -->
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1"  x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22"  y1="4.22"  x2="5.64"  y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1"  y1="12" x2="3"  y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36"/>
+        <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+      </svg>
+      <!-- Moon icon (shown in light mode → click to go dark) -->
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
+    <!-- ── Hero (ch4n3 style: avatar left, text right) ─────── -->
+  <header class="hero">
+    <img src="{{ d.hero.avatar }}" alt="{{ d.hero.name }}" class="avatar" width="180" height="180">
+    <div class="hero-body">
+      <h1 class="hero-name">{{ d.hero.name }}</h1>
+      <p class="hero-role">{{ d.hero.role }}</p>
+      <p class="hero-bio">{{ d.hero.description }}</p>
+      {% if d.hero.highlights %}
+      <ul class="highlights">
+        {% for h in d.hero.highlights %}<li>{{ h }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+      <div class="socials">
+        {% for s in d.hero.socials %}
+        <a href="{{ s.url }}" class="social-pill" target="_blank" rel="noopener noreferrer">
+          {% case s.icon %}
+          {% when 'github' %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          {% when 'twitter' %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          {% when 'linkedin' %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          {% when 'hackerone' %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M7.506 0L4.58 3.188v17.625L7.506 24h.975V0zm8.013 0h-.975v24h.975l2.925-3.188V3.188zm-5.832 9.337v5.326h4.626V9.337z"/></svg>
+          {% when 'rss' %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1" fill="currentColor" stroke="none"/></svg>
+          {% when 'email' %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          {% when 'velog' %}
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 0C1.338 0 0 1.338 0 3v18c0 1.662 1.338 3 3 3h18c1.662 0 3-1.338 3-3V3c0-1.662-1.338-3-3-3H3Zm3.883 6.26c.18-.418.404-.622.762-.622.358 0 .582.181.762.622l5.525 12.86c.09.227.135.397.135.533 0 .397-.293.624-.74.624-.359 0-.583-.17-.763-.612L10.89 15.1H5.382l-1.65 4.57c-.18.44-.405.611-.762.611-.448 0-.74-.227-.74-.624 0-.136.045-.306.135-.533L7.883 6.26ZM8.14 7.7 5.787 14.13h4.705L8.14 7.7Zm10.283 5.49c0-.397.27-.668.696-.668.425 0 .695.271.695.668v5.627c0 .397-.27.668-.695.668-.426 0-.696-.271-.696-.668V13.19Z"/></svg>
+          {% endcase %}
+          <span>{{ s.label }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Body: TOC + Main ─────────────────────────────────── -->
+  <div class="page-body">
+
+    <nav class="toc" id="toc" aria-label="Table of contents">
+      <ul>
+        {% if d.experience %}
+        <li><a href="#experience" class="toc-link">{{ d.labels.experience | default: "Work Experience" }}</a></li>
+        {% endif %}
+        {% if d.education %}
+        <li><a href="#education" class="toc-link">{{ d.labels.education | default: "Education" }}</a></li>
+        {% endif %}
+        {% if d.vulnerabilities %}
+        <li><a href="#vulns" class="toc-link">{{ d.labels.vulnerabilities | default: "Vulnerabilities" }}</a></li>
+        {% endif %}
+        {% if d.ctf_awards %}
+        <li><a href="#awards" class="toc-link">{{ d.labels.ctf | default: "Awards" }}</a></li>
+        {% endif %}
+        {% if d.projects %}
+        <li><a href="#projects" class="toc-link">{{ d.labels.projects | default: "Projects" }}</a></li>
+        {% endif %}
+        {% if d.blog_posts %}
+        <li><a href="#blog" class="toc-link">{{ d.labels.blog | default: "Blog Posts" }}</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+
+    <main id="main">
+
+      <!-- Work Experience -->
+      {% if d.experience %}
+      <section id="experience" class="section">
+        <h2 class="section-title">{{ d.labels.experience | default: "Work Experience" }}</h2>
+        <div class="timeline">
+          {% for job in d.experience %}
+          <div class="timeline-entry">
+            <div class="timeline-meta">
+              <span class="date-range">
+                {{ job.start | replace: '-', '.' }}
+                &ndash;
+                {% if job.end %}{{ job.end | replace: '-', '.' }}{% else %}{{ d.labels.present | default: "Present" }}{% endif %}
+              </span>
+            </div>
+            <div class="timeline-content">
+              <div class="tl-header">
+                <span class="tl-role">{{ job.role }}</span>
+                <span class="tl-sep">@</span>
+                {% if job.company_url %}<a href="{{ job.company_url }}" class="tl-company" target="_blank" rel="noopener">{{ job.company }}</a>{% else %}<span class="tl-company">{{ job.company }}</span>{% endif %}
+                {% if job.location %}<span class="tl-location">· {{ job.location }}</span>{% endif %}
+              </div>
+              {% if job.bullets %}
+              <ul class="tl-bullets">
+                {% for b in job.bullets %}<li>{{ b }}</li>{% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      <!-- Education -->
+      {% if d.education %}
+      <section id="education" class="section">
+        <h2 class="section-title">{{ d.labels.education | default: "Education" }}</h2>
+        <div class="timeline">
+          {% for edu in d.education %}
+          <div class="timeline-entry">
+            <div class="timeline-meta">
+              <span class="date-range">
+                {{ edu.start | replace: '-', '.' }}
+                &ndash;
+                {% if edu.end %}{{ edu.end | replace: '-', '.' }}{% else %}{{ d.labels.present | default: "Present" }}{% endif %}
+              </span>
+            </div>
+            <div class="timeline-content">
+              <div class="tl-header">
+                <span class="tl-role">{{ edu.degree }}</span>
+                <span class="tl-sep">@</span>
+                {% if edu.school_url %}<a href="{{ edu.school_url }}" class="tl-company" target="_blank" rel="noopener">{{ edu.school }}</a>{% else %}<span class="tl-company">{{ edu.school }}</span>{% endif %}
+                {% if edu.location %}<span class="tl-location">· {{ edu.location }}</span>{% endif %}
+              </div>
+              {% if edu.note and edu.note != '' %}
+              <p class="tl-note">{{ edu.note }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+       <!-- ══════════════════════════════════════════════════
+     Disclosed Vulnerabilities & Bug Bounties
+     (Flat list — no filters, no sub-groups)
+     ══════════════════════════════════════════════════ -->
+    {% if d.vulnerabilities %}
+    <section class="section" id="vulns">
+      <h2 class="section-title">{{ d.labels.vulnerabilities | default: "Disclosed Vulnerabilities" }}</h2>
+
+      <div class="vuln-cards">
+        {% for vuln in d.vulnerabilities %}
+        <div class="vuln-card collapsed" data-vendor="{{ vuln.vendor | slugify }}">
+          <div class="vuln-row">
+            {% if vuln.vendor_logo %}
+            <div class="vuln-logo"><img src="{{ vuln.vendor_logo }}" alt="{{ vuln.vendor }}" loading="lazy"></div>
+            {% else %}
+            <div class="vuln-logo vuln-logo-fallback">{{ vuln.vendor | slice: 0, 1 }}</div>
+            {% endif %}
+            <div class="vuln-body">
+              <div class="vuln-meta">
+                <span class="vuln-vendor">{{ vuln.vendor }}</span>
+                <span class="cve-id">{{ vuln.cve }}</span>
+                {% if vuln.type %}<span class="vuln-type">{{ vuln.type }}</span>{% endif %}
+              </div>
+              <p class="vuln-title">{{ vuln.title }}</p>
+            </div>
+            {% if vuln.cvss %}
+            <div class="vuln-cvss severity-{{ vuln.severity | downcase }}">
+              <span class="cvss-score">{{ vuln.cvss }}</span>
+              <span class="cvss-label">{{ vuln.severity }}</span>
+            </div>
+            {% elsif vuln.severity %}
+            <div class="vuln-cvss severity-{{ vuln.severity | downcase }}">
+              <span class="cvss-label">{{ vuln.severity }}</span>
+            </div>
+            {% endif %}
+            <button type="button" class="vuln-toggle" aria-expanded="false" aria-label="Toggle details">
+              <svg class="vuln-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+          <div class="vuln-details">
+            {% if vuln.description and vuln.description != '' %}
+            <p class="vuln-desc">{{ vuln.description | strip_newlines }}</p>
+            {% endif %}
+            {% if vuln.links and vuln.links.size > 0 %}
+            <div class="vuln-links">
+              {% for link in vuln.links %}<a href="{{ link.url }}" class="vuln-link" target="_blank" rel="noopener">{{ link.label }}</a>{% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Awards -->
+      {% if d.ctf_awards %}
+      <section id="awards" class="section">
+        <h2 class="section-title">{{ d.labels.ctf | default: "CTF Awards" }}</h2>
+        {% for group in d.ctf_awards %}
+        <div class="ctf-group">
+          <h3 class="ctf-year">{{ group.year }}</h3>
+          <div class="ctf-entries">
+            {% for entry in group.entries %}
+            <div class="ctf-entry">
+              <span class="ctf-place">{{ entry.place }}</span>
+              <span class="ctf-team">{{ entry.team }}</span>
+              <span class="ctf-event">{{ entry.event }}</span>
+              <span class="ctf-organizer">{{ entry.organizer }}</span>
+              {% if entry.award and entry.award != '' %}
+              <span class="ctf-award">{{ entry.award }}</span>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </section>
+      {% endif %}
+
+      <!-- Projects -->
+      {% if d.projects %}
+      <section id="projects" class="section">
+        <h2 class="section-title">{{ d.labels.projects | default: "Projects" }}</h2>
+        <div class="project-grid">
+          {% for proj in d.projects %}
+          <div class="project-card">
+            {% if proj.icon %}<div class="project-icon">{{ proj.icon }}</div>{% endif %}
+            <div class="project-name-row">
+              {% if proj.url %}
+                <a href="{{ proj.url }}" class="project-name" target="_blank" rel="noopener">{{ proj.name }}</a>
+              {% else %}
+                <span class="project-name">{{ proj.name }}</span>
+              {% endif %}
+            </div>
+            <p class="project-desc">{{ proj.description | strip_newlines }}</p>
+            {% if proj.tags %}
+            <div class="project-tags">
+              {% for tag in proj.tags %}<span class="project-tag">{{ tag }}</span>{% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      <!-- Talks -->
+      {% if d.talks %}
+      <section id="talks" class="section">
+        <h2 class="section-title">{{ d.labels.talks | default: "Talks" }}</h2>
+        <ul class="simple-list">
+          {% for talk in d.talks %}
+          <li class="simple-entry">
+            <div class="simple-meta">{{ talk.year }}</div>
+            <div class="simple-content">
+              {% if talk.url and talk.url != '' %}<a href="{{ talk.url }}" target="_blank" rel="noopener" class="entry-title">{{ talk.title }}</a>{% else %}<span class="entry-title">{{ talk.title }}</span>{% endif %}
+              <span class="entry-sub">{{ talk.conference }}</span>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      <!-- Blog Posts -->
+      {% if d.blog_posts %}
+      <section id="blog" class="section">
+        <h2 class="section-title">{{ d.labels.blog | default: "Blog Posts" }}</h2>
+        <ul class="simple-list">
+          {% for post in d.blog_posts %}
+          <li class="simple-entry">
+            <div class="simple-meta">{{ post.year }}</div>
+            <div class="simple-content">
+              <a href="{{ post.url }}" target="_blank" rel="noopener" class="entry-title">{{ post.title }}</a>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+    </main>
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>&copy; {{ site.time | date: '%Y' }} {{ d.hero.name }} &middot; <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  </footer>
+
+  <script src="/assets/script.js"></script>
+</body>
+</html>

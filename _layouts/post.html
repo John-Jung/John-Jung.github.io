@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% assign lang = page.lang | default: 'en' %}
+{% assign key  = 'profile_' | append: lang %}
+{% assign d    = site.data[key] %}
+{% comment %} Extract post slug from URL: /ko/posts/example-post/ → example-post {% endcomment %}
+{% assign post_slug = page.url | split: '/posts/' | last | remove: '/' %}
+{% if lang == 'ko' %}{% assign posts_path = '/ko/posts/' %}
+{% elsif lang == 'zh' %}{% assign posts_path = '/zh/posts/' %}
+{% else %}{% assign posts_path = '/posts/' %}{% endif %}
+<html lang="{{ lang }}" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — {{ d.hero.name }}</title>
+  <meta name="description" content="{{ page.description | default: page.excerpt | strip_html | truncate: 160 }}">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/blog.css">
+  <link rel="stylesheet" href="/assets/syntax.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+
+  <!-- ── Top-right controls ───────────────────────────────── -->
+  <div class="top-controls">
+    <nav class="lang-switcher" aria-label="Language">
+      <a href="/posts/{{ post_slug }}/"    {% if lang == 'en' %}class="active"{% endif %}>EN</a>
+      <span class="sep">|</span>
+      <a href="/ko/posts/{{ post_slug }}/" {% if lang == 'ko' %}class="active"{% endif %}>KO</a>
+      <span class="sep">|</span>
+      <a href="/zh/posts/{{ post_slug }}/" {% if lang == 'zh' %}class="active"{% endif %}>中</a>
+    </nav>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ── Post header (full width, above TOC+body split) ──── -->
+  <div class="post-container">
+    <a href="{{ posts_path }}" class="post-back-link">← Blog</a>
+
+    <header class="post-header">
+      {% if page.tags %}
+      <div class="post-header-tags">
+        {% for tag in page.tags %}<span class="post-tag">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
+      <h1 class="post-title">{{ page.title }}</h1>
+      <div class="post-meta">
+        <img src="{{ d.hero.avatar }}" alt="{{ d.hero.name }}" class="post-avatar" width="28" height="28">
+        <span class="post-author">{{ d.hero.name }}</span>
+        <span class="post-meta-sep">&middot;</span>
+        <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%b %d, %Y" }}</time>
+        {% assign words = content | number_of_words %}
+        {% assign mins = words | divided_by: 200 %}
+        {% if mins < 1 %}{% assign mins = 1 %}{% endif %}
+        <span class="post-meta-sep">&middot;</span>
+        <span class="post-read-time">{{ mins }} min read</span>
+      </div>
+    </header>
+  </div>
+
+  <!-- ── Body: TOC sidebar + Article ─────────────────────── -->
+  <div class="post-page-body">
+
+    <nav class="post-toc" id="post-toc" aria-label="Table of contents">
+      <!-- auto-generated from h2/h3 by post-toc.js -->
+    </nav>
+
+    <article class="post-main" id="post-main">
+      <div class="post-body">
+        {{ content }}
+      </div>
+
+      <footer class="post-footer">
+        <a href="{{ posts_path }}" class="post-back-link">← Back to all posts</a>
+      </footer>
+    </article>
+
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>&copy; {{ site.time | date: '%Y' }} {{ d.hero.name }} &middot; <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  </footer>
+
+  <script src="/assets/script.js"></script>
+  <script src="/assets/post-toc.js"></script>
+</body>
+</html>

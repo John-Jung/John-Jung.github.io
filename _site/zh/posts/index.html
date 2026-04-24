@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="zh" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — 郑圣煜</title>
+  <meta name="description" content="Blog posts by 郑圣煜">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/blog.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+
+  <!-- ── Top-right controls ───────────────────────────────── -->
+  <div class="top-controls">
+    <nav class="lang-switcher" aria-label="Language">
+      <a href="/posts/"    >EN</a>
+      <span class="sep">|</span>
+      <a href="/ko/posts/" >KO</a>
+      <span class="sep">|</span>
+      <a href="/zh/posts/" class="active">中</a>
+    </nav>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ── Blog header ──────────────────────────────────────── -->
+  <div class="blog-container">
+    <header class="blog-header">
+      <a href="/zh/" class="blog-back-link">← 郑圣煜</a>
+      <h1 class="blog-title">Blog</h1>
+    </header>
+
+    <!-- ── Post list ────────────────────────────────────────── -->
+    <ul class="post-list">
+      
+      <li class="post-list-item">
+        <time class="post-date" datetime="2026-04-23">
+          Apr 23, 2026
+        </time>
+        <div class="post-list-body">
+          <a href="/zh/posts/how-i-got-cves-with-ai/" class="post-list-title">一个普通人模仿顶级黑客获得 CVE 的经历 (副标题：你也得做到！)</a>
+          
+          <p class="post-list-desc">利用 AI 在 TanStack Query 和 Apache Airflow 中发现漏洞并成功获得 CVE 的故事。你也得做到！</p>
+          
+          
+          <div class="post-list-tags">
+            <span class="post-tag">CVE</span><span class="post-tag">AI</span><span class="post-tag">漏洞挖掘</span><span class="post-tag">Claude</span><span class="post-tag">开源</span>
+          </div>
+          
+        </div>
+      </li>
+      
+    </ul>
+
+    
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>&copy; 2026 郑圣煜 &middot; <a href="mailto:sungwuk98@gmail.com">sungwuk98@gmail.com</a></p>
+  </footer>
+
+  <script src="/assets/script.js"></script>
+</body>
+</html>

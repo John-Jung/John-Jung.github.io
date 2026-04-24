@@ -1,0 +1,267 @@
+labels:
+  experience: "Work Experience"
+  projects: "Projects"
+  education: "Education"
+  ctf: "Awards"
+  vulnerabilities: "Disclosed Vulnerabilities & Bug Bounties"
+  talks: "Talks"
+  blog: "Blog Posts"
+  skills: "Technical Skills"
+  present: "Present"
+
+hero:
+  name: "Sungwuk Jung"
+  role: "Security Researcher"
+  avatar: "/assets/profile.jpg"
+  description: >
+    I'm Sungwuk, a Security Researcher with a passion for breaking things to make them safer! I'm currently focusing on Web/Mobile Penetration Testing and Red Teaming — always hunting for vulnerabilities and pushing security boundaries.
+  highlights:
+    - "CVEs — found with Claude"
+    - "Multiple KVE / FVE findings via KISA, Korea Financial Security Institute, and FindtheGap"
+    - "Penetration testing and Red Teaming experience across finance, public sector, healthcare, and critical infrastructure"
+  socials:
+      - label: "GitHub"
+        url: "https://github.com/John-Jung"
+        icon: github
+      - label: "LinkedIn"
+        url: "https://www.linkedin.com/in/sungwuk-jung-1aa0a7218/"
+        icon: linkedin
+      - label: "Blog"
+        url: "/posts/"
+        icon: rss
+      - label: "Velog"
+        url: "https://velog.io/@wearetheone/posts"
+        icon: velog
+      - label: "Email"
+        url: "mailto:sungwuk98@gmail.com"
+        icon: email
+
+experience:
+  - start: "2025-11"
+    end: null
+    role: "Security Researcher"
+    company: "Korea Information Systems Consulting & Audit Co., Ltd."
+    company_url: null
+    location: "Seoul, Korea"
+    bullets:
+      - "Penetration testing (web / mobile) and red teaming across critical sectors — oil refinery, government institutions, university hospitals, and major enterprise companies"
+      - "Red teaming engagements and exploitation of 1-day vulnerabilities"
+      - "ISMS certification support through comprehensive security assessments"
+
+  - start: "2025-06"
+    end: "2025-09"
+    role: "Security Consultant"
+    company: "BlueTeamK"
+    company_url: null
+    location: "Seoul, Korea"
+    bullets:
+      - "Designed and implemented infrastructure vulnerability assessment scripts"
+      - "Conducted analysis of global security incidents and built PoC demonstrations"
+      - "Studied and applied the FAIR methodology for quantitative risk assessment"
+      - "Led the development of technical and business proposals"
+
+  - start: "2024-12"
+    end: "2025-03"
+    role: "Penetration Tester"
+    company: "Fin Security"
+    company_url: null
+    location: "Seoul, Korea"
+    bullets:
+      - "Penetration testing (web / mobile) and security consulting across regulated industries — financial services, pharmaceutical, payment systems, and crowdfunding platforms"
+      - "Compliance-driven assessments supporting ISO 27001 and ISMS certifications"
+      - "Critical information infrastructure security evaluation"
+
+projects:
+  - name: "RootRoot"
+    icon: "🌱"
+    url: "https://github.com/John-Jung/RootRoot"
+    description: >
+      Android application implementing rooted-device detection techniques
+      and evaluating their bypasses. Published on Google Play Store.
+    tags: ["Android", "Kotlin", "Security"]
+
+  - name: "Clicktomate"
+    icon: "🖱️"
+    url: "https://github.com/John-Jung/Clicktomate"
+    description: >
+      Chrome extension that automates repetitive click actions. Published
+      on Chrome Web Store.
+    tags: ["Chrome Extension", "JavaScript"]
+
+  - name: "Vulnerable Dashboard"
+    icon: "🛡️"
+    url: "https://github.com/John-Jung/Vulnerable_DashBoard"
+    description: >
+      Critical vulnerability implementations (File Upload, Path Traversal,
+      Auth bypass, XSS, CSRF, SQL Injection) with secure-coding reviews
+      for training and bypass practice.
+    tags: ["Web Security", "OWASP", "Secure Coding"]
+
+  - name: "Mobile Bypass"
+    icon: "📱"
+    url: "https://github.com/John-Jung/Android-Rooting-Bypass-by-hooking-Method"
+    description: >
+      Mobile security bypass research — rooting detection bypass, FLAG_SECURE
+      capture-prevention bypass, PIN login bypass via response tampering,
+      and ProcessBuilder 'su' detection evasion.
+    tags: ["Android", "Frida", "Bypass", "Hooking"]
+
+  - name: "Cloud Financial App Pentest"
+    icon: "☁️"
+    url: "https://github.com/John-Jung/NoName-Securities"
+    description: >
+      8-member team project (Project Manager role). Cloud-based financial
+      application penetration test across three scenarios — asset hijacking,
+      cloud resource takeover, mobile ransomware. Found XSS, SQL Injection,
+      SSRF, and file upload vulnerabilities.
+    tags: ["Cloud", "Pentest", "Burp Suite", "Metasploit", "Frida"]
+
+education:
+  - start: "2024-02"
+    end: "2024-08"
+    degree: "Cloud Security Expert Course"
+    school: "SK Shieldus Rookies class of 19"
+    location: "Seoul, Korea"
+    note: ""
+
+  - start: "2018-03"
+    end: "2024-02"
+    degree: "B.S. Computer Science"
+    school: "Sangmyung University"
+    location: "Seoul, Korea"
+    note: ""
+
+  - start: "2015-09"
+    end: "2017-06"
+    degree: "High Schcool Graduate"
+    school: "Shanghai High School International Division"
+    location: "Shanghai, China"
+    note: ""
+
+ctf_awards:
+  - year: 2018
+    entries:
+      - place: "Prize"
+        team: ""
+        event: "Sangmyung University Foreign Language Essay Competition"
+        organizer: "Sangmyung University"
+        award: "Encouragement Prize — Chinese Essay Category"
+
+vulnerabilities:
+  # ── CVEs ─────────────────────────────────────────────
+  - category: "cve"
+    vendor: "Apache Airflow"
+    vendor_logo: "/assets/vendors/AirflowLogo.svg"
+    cve: "CVE-2026-25604"
+    cve_url: "https://nvd.nist.gov/vuln/detail/CVE-2026-25604"
+    cvss: "7.5"
+    severity: "High"
+    type: "Authentication Bypass"
+    title: "Host Header Injection leading to SAML authentication bypass in AWS Auth Manager"
+    description: >
+      The AWS Auth Manager constructed the SAML Assertion Consumer Service
+      URL using the client-supplied Host header, allowing an attacker to
+      capture valid SAML responses on an attacker-controlled server and
+      replay them against the victim Airflow instance — or reuse tokens
+      across different instances with different access controls. Fixed in
+      apache-airflow-providers-amazon 9.22.0.
+    links:
+      - label: "NVD"
+        url: "https://nvd.nist.gov/vuln/detail/CVE-2026-25604"
+      - label: "Fix PR"
+        url: "https://github.com/apache/airflow/pull/61368"
+      - label: "PoC"
+        url: "https://github.com/John-Jung/CVE-2026-25604-PoC"
+ 
+  - category: "cve"
+    vendor: "TanStack Query"
+    vendor_logo: "/assets/vendors/tanstackLogo.webp"
+    cve: "CVE-2026-26903"
+    cve_url: "https://nvd.nist.gov/vuln/detail/CVE-2026-26903"
+    cvss: "5.3"
+    severity: "Medium"
+    type: "Denial of Service"
+    title: "Denial of Service via unbounded recursion in replaceEqualDeep"
+    description: >
+      The internal replaceEqualDeep function recursively compared nested
+      objects without any depth limit or cycle detection. A single query
+      update containing an object nested 5,000+ levels deep was enough to
+      exhaust the JavaScript call stack and freeze the UI thread until a
+      page reload. Fixed in @tanstack/query-core 5.90.17 by adding a
+      depth cap of 500.
+    links:
+      - label: "NVD"
+        url: "https://nvd.nist.gov/vuln/detail/CVE-2026-26903"
+      - label: "Fix PR"
+        url: "https://github.com/TanStack/query/pull/10032"
+      - label: "PoC"
+        url: "https://github.com/John-Jung/CVE-2026-26903-PoC"
+ 
+  # ── Bug Bounty & Others ──────────────────────────────
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2025-2839"
+    severity: "High"
+    type: "Business Logic Bypass"
+    title: "Business logic bypass reported to Korea Internet & Security Agency"
+    description: ""
+    links: []
+ 
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2024-2169"
+    severity: "Medium"
+    type: "Stored XSS"
+    title: "Stored XSS reported to Korea Internet & Security Agency"
+    description: ""
+    links: []
+ 
+  - category: "bugbounty"
+    vendor: "KFSI"
+    vendor_logo: "/assets/vendors/KFSI_Logo.svg"
+    cve: "FVE-2025-0023"
+    severity: "High"
+    type: "IDOR"
+    title: "Insecure Direct Object Reference — Korea Financial Security Institute"
+    description: ""
+    links: []
+ 
+  - category: "bugbounty"
+    vendor: "FindtheGap"
+    vendor_logo: "/assets/vendors/findgap_logo.jpg"
+    cve: "FVE-2026-24b7-74085"
+    severity: "High"
+    type: "Business Logic Bypass"
+    title: "Business logic bypass reported via FindtheGap"
+    description: ""
+    links: []
+ 
+  - category: "bugbounty"
+    vendor: "FindtheGap"
+    vendor_logo: "/assets/vendors/findgap_logo.jpg"
+    cve: "FVE-2026-24b7-74084"
+    severity: "High"
+    type: "Business Logic Bypass"
+    title: "Business logic bypass reported via FindtheGap"
+    description: ""
+    links: []
+ 
+  - category: "bugbounty"
+    vendor: "FindtheGap"
+    vendor_logo: "/assets/vendors/findgap_logo.jpg"
+    cve: "FVE-2025-24b7-73585"
+    severity: "Medium"
+    type: "Information Disclosure"
+    title: "Information disclosure reported via FindtheGap"
+    description: ""
+    links: []
+
+#talks: []
+
+blog_posts:
+  - title: "How an Ordinary Person Got CVEs by Following Elite Hackers (feat: HEY, you can do it too!)"
+    url: "http://127.0.0.1:4000/posts/how-i-got-cves-with-ai/"
+    year: 2026
+

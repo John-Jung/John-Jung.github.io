@@ -1,0 +1,257 @@
+labels:
+  experience: "경력"
+  projects: "프로젝트"
+  education: "학력"
+  ctf: "수상"
+  vulnerabilities: "취약점 공개 & 버그바운티"
+  talks: "발표"
+  blog: "블로그"
+  skills: "기술 스택"
+  present: "현재"
+
+hero:
+  name: "정성욱"
+  role: "Security Researcher"
+  avatar: "/assets/profile.jpg"
+  description: >
+    안녕하세요, 보안 연구원 정성욱입니다. 시스템을 분석하고 취약점을 찾아 더 안전하게 만드는 일에 열정을 가지고 있습니다. 현재 웹/모바일 모의해킹과 레드팀 업무에 집중하고 있으며, 항상 새로운 취약점을 탐색하고 보안의 경계를 넓혀가고 있습니다.
+  highlights:
+    - "CVE — Claude와 함께 발견"
+    - "KISA, 금융보안원, 파인더갭을 통한 다수의 KVE / FVE 취약점 제보"
+    - "금융, 공공, 의료, 주요 정보통신 기반시설 등 다양한 산업군 모의해킹 및 레드팀 수행"
+  socials:
+      - label: "GitHub"
+        url: "https://github.com/John-Jung"
+        icon: github
+      - label: "Blog"
+        url: "/posts/"
+        icon: rss
+      - label: "Velog"
+        url: "https://velog.io/@wearetheone/posts"
+        icon: velog
+      - label: "Email"
+        url: "mailto:sungwuk98@gmail.com"
+        icon: email
+
+experience:
+  - start: "2025-11"
+    end: null
+    role: "보안 연구원"
+    company: "한국정보기술단"
+    company_url: null
+    location: "서울, 대한민국"
+    bullets:
+      - "주요 산업군 웹/모바일 모의해킹 및 레드팀 수행 — 정유사, 공공기관, 대학병원, 주요 기업"
+      - "레드팀 업무 수행 및 1-day 취약점 활용"
+      - "ISMS 인증 지원을 위한 종합 보안 점검 수행"
+
+  - start: "2025-06"
+    end: "2025-09"
+    role: "보안 컨설턴트"
+    company: "블루팀케이"
+    company_url: null
+    location: "서울, 대한민국"
+    bullets:
+      - "인프라 취약점 진단 스크립트 설계 및 구현"
+      - "글로벌 보안 사고 분석 및 PoC 시연 구축"
+      - "FAIR 방법론 기반 정량적 위험 평가 연구 및 적용"
+      - "기술 제안서 및 사업 제안서 작성 주도"
+
+  - start: "2024-12"
+    end: "2025-03"
+    role: "모의해킹 컨설턴트"
+    company: "핀시큐리티"
+    company_url: null
+    location: "서울, 대한민국"
+    bullets:
+      - "규제 산업군 웹/모바일 모의해킹 및 보안 컨설팅 수행 — 금융, 제약, 결제, 크라우드펀딩"
+      - "ISO 27001 및 ISMS 인증 지원 컴플라이언스 점검 수행"
+      - "주요 정보통신 기반시설 보안 점검"
+
+projects:
+  - name: "RootRoot"
+    icon: "🌱"
+    url: "https://github.com/John-Jung/RootRoot"
+    description: >
+      루팅 탐지 기법 구현 및 우회 평가를 위한 안드로이드 애플리케이션.
+      Google Play 스토어에 출시.
+    tags: ["Android", "Kotlin", "Security"]
+
+  - name: "Clicktomate"
+    icon: "🖱️"
+    url: "https://github.com/John-Jung/Clicktomate"
+    description: >
+      반복 클릭 작업을 자동화하는 Chrome 확장 프로그램.
+      Chrome 웹 스토어에 출시.
+    tags: ["Chrome Extension", "JavaScript"]
+
+  - name: "Vulnerable Dashboard"
+    icon: "🛡️"
+    url: "https://github.com/John-Jung/Vulnerable_DashBoard"
+    description: >
+      주요 취약점 구현(파일 업로드, 경로 탐색, 인증 우회, XSS, CSRF,
+      SQL Injection) 및 시큐어 코딩 리뷰를 위한 학습·우회 실습 환경.
+    tags: ["Web Security", "OWASP", "Secure Coding"]
+
+  - name: "Mobile Bypass"
+    icon: "📱"
+    url: "https://github.com/John-Jung/Android-Rooting-Bypass-by-hooking-Method"
+    description: >
+      모바일 보안 우회 연구 — 루팅 탐지 우회, FLAG_SECURE 캡처 방지 우회,
+      응답 변조를 통한 PIN 로그인 우회, ProcessBuilder 'su' 탐지 회피.
+    tags: ["Android", "Frida", "Bypass", "Hooking"]
+
+  - name: "Cloud Financial App Pentest"
+    icon: "☁️"
+    url: "https://github.com/John-Jung/NoName-Securities"
+    description: >
+      8인 팀 프로젝트(PM 역할). 클라우드 기반 금융 애플리케이션 모의해킹 —
+      자산 탈취, 클라우드 리소스 탈취, 모바일 랜섬웨어 등 3개 시나리오 수행.
+      XSS, SQL Injection, SSRF, 파일 업로드 취약점 발견.
+    tags: ["Cloud", "Pentest", "Burp Suite", "Metasploit", "Frida"]
+
+education:
+  - start: "2024-02"
+    end: "2024-08"
+    degree: "클라우드 보안 전문가 과정"
+    school: "SK쉴더스 루키즈 19기"
+    location: "대한민국 서울"
+    note: ""
+
+  - start: "2018-03"
+    end: "2024-02"
+    degree: "컴퓨터과학과 학사"
+    school: "상명대학교"
+    location: "서울, 대한민국"
+    note: ""
+
+  - start: "2015-09"
+    end: "2017-06"
+    degree: "고등학교 졸업"
+    school: "상해중학교 국제부"
+    location: "상하이, 중국"
+    note: ""
+
+ctf_awards:
+  - year: 2018
+    entries:
+      - place: "수상"
+        team: ""
+        event: "상명대학교 외국어 에세이 공모전"
+        organizer: "상명대학교"
+        award: "장려상 — 중국어 에세이 부문"
+
+vulnerabilities:
+  # ── CVE ─────────────────────────────────────────────
+  - category: "cve"
+    vendor: "Apache Airflow"
+    vendor_logo: "/assets/vendors/AirflowLogo.svg"
+    cve: "CVE-2026-25604"
+    cve_url: "https://nvd.nist.gov/vuln/detail/CVE-2026-25604"
+    cvss: "7.5"
+    severity: "High"
+    type: "인증 우회"
+    title: "AWS Auth Manager SAML 인증 우회를 유발하는 Host 헤더 인젝션"
+    description: >
+      AWS Auth Manager가 클라이언트가 제공한 Host 헤더를 사용하여 SAML
+      Assertion Consumer Service URL을 구성함으로써, 공격자가 공격자 제어
+      서버에서 유효한 SAML 응답을 캡처하여 피해자 Airflow 인스턴스에 재전송하거나
+      서로 다른 접근 권한을 가진 인스턴스 간에 토큰을 재사용할 수 있었음.
+      apache-airflow-providers-amazon 9.22.0에서 수정됨.
+    links:
+      - label: "NVD"
+        url: "https://nvd.nist.gov/vuln/detail/CVE-2026-25604"
+      - label: "수정 PR"
+        url: "https://github.com/apache/airflow/pull/61368"
+      - label: "PoC"
+        url: "https://github.com/John-Jung/CVE-2026-25604-PoC"
+
+  - category: "cve"
+    vendor: "TanStack Query"
+    vendor_logo: "/assets/vendors/tanstackLogo.webp"
+    cve: "CVE-2026-26903"
+    cve_url: "https://nvd.nist.gov/vuln/detail/CVE-2026-26903"
+    cvss: "5.3"
+    severity: "Medium"
+    type: "서비스 거부"
+    title: "replaceEqualDeep의 무제한 재귀를 통한 서비스 거부"
+    description: >
+      내부 함수 replaceEqualDeep가 깊이 제한이나 순환 탐지 없이 중첩 객체를
+      재귀적으로 비교하여, 5,000단계 이상 중첩된 객체가 포함된 단일 쿼리 업데이트만으로
+      JavaScript 콜 스택을 소진시키고 페이지를 새로고침할 때까지 UI 스레드를
+      정지시킬 수 있었음. @tanstack/query-core 5.90.17에서 깊이 제한 500 추가로 수정됨.
+    links:
+      - label: "NVD"
+        url: "https://nvd.nist.gov/vuln/detail/CVE-2026-26903"
+      - label: "수정 PR"
+        url: "https://github.com/TanStack/query/pull/10032"
+      - label: "PoC"
+        url: "https://github.com/John-Jung/CVE-2026-26903-PoC"
+
+  # ── 버그바운티 & 기타 ──────────────────────────────
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2025-2839"
+    severity: "High"
+    type: "비즈니스 로직 우회"
+    title: "한국인터넷진흥원(KISA)에 제보한 비즈니스 로직 우회 취약점"
+    description: ""
+    links: []
+
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2024-2169"
+    severity: "Medium"
+    type: "Stored XSS"
+    title: "한국인터넷진흥원(KISA)에 제보한 Stored XSS 취약점"
+    description: ""
+    links: []
+
+  - category: "bugbounty"
+    vendor: "KFSI"
+    vendor_logo: "/assets/vendors/KFSI_Logo.svg"
+    cve: "FVE-2025-0023"
+    severity: "High"
+    type: "IDOR"
+    title: "금융보안원에 제보한 비인가 객체 직접 참조(IDOR) 취약점"
+    description: ""
+    links: []
+
+  - category: "bugbounty"
+    vendor: "FindtheGap"
+    vendor_logo: "/assets/vendors/findgap_logo.jpg"
+    cve: "FVE-2026-24b7-74085"
+    severity: "High"
+    type: "비즈니스 로직 우회"
+    title: "파인드갭을 통해 제보한 비즈니스 로직 우회 취약점"
+    description: ""
+    links: []
+
+  - category: "bugbounty"
+    vendor: "FindtheGap"
+    vendor_logo: "/assets/vendors/findgap_logo.jpg"
+    cve: "FVE-2026-24b7-74084"
+    severity: "High"
+    type: "비즈니스 로직 우회"
+    title: "파인더갭을 통해 제보한 비즈니스 로직 우회 취약점"
+    description: ""
+    links: []
+
+  - category: "bugbounty"
+    vendor: "FindtheGap"
+    vendor_logo: "/assets/vendors/findgap_logo.jpg"
+    cve: "FVE-2025-24b7-73585"
+    severity: "Medium"
+    type: "정보 노출"
+    title: "파인더갭을 통해 제보한 정보 노출 취약점"
+    description: ""
+    links: []
+
+#talks: []
+
+blog_posts:
+  - title: "평범한 사람인 내가 1류 해커를 따라해서 CVE를 발급 받은 경험(부제:야! 너두 할 수 있어)"
+    url: "http://127.0.0.1:4000/ko/posts/how-i-got-cves-with-ai/"
+    year: 2026

@@ -1,0 +1,20 @@
+# ============================================================
+#  ADD these lines to your existing _config.yml
+# ============================================================
+
+# Markdown & syntax highlighting
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+# Exclude draft files from build
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

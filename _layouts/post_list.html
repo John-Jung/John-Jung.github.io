@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% assign lang = page.lang | default: 'en' %}
+{% assign key  = 'profile_' | append: lang %}
+{% assign d    = site.data[key] %}
+{% assign posts = site.posts | where: "lang", lang %}
+<html lang="{{ lang }}" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — {{ d.hero.name }}</title>
+  <meta name="description" content="Blog posts by {{ d.hero.name }}">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/blog.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+
+  <!-- ── Top-right controls ───────────────────────────────── -->
+  <div class="top-controls">
+    <nav class="lang-switcher" aria-label="Language">
+      <a href="/posts/"    {% if lang == 'en' %}class="active"{% endif %}>EN</a>
+      <span class="sep">|</span>
+      <a href="/ko/posts/" {% if lang == 'ko' %}class="active"{% endif %}>KO</a>
+      <span class="sep">|</span>
+      <a href="/zh/posts/" {% if lang == 'zh' %}class="active"{% endif %}>中</a>
+    </nav>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ── Blog header ──────────────────────────────────────── -->
+  <div class="blog-container">
+    <header class="blog-header">
+      <a href="{% if lang == 'en' %}/{% elsif lang == 'ko' %}/ko/{% else %}/zh/{% endif %}" class="blog-back-link">← {{ d.hero.name }}</a>
+      <h1 class="blog-title">Blog</h1>
+    </header>
+
+    <!-- ── Post list ────────────────────────────────────────── -->
+    <ul class="post-list">
+      {% for post in posts %}
+      <li class="post-list-item">
+        <time class="post-date" datetime="{{ post.date | date: '%Y-%m-%d' }}">
+          {{ post.date | date: "%b %d, %Y" }}
+        </time>
+        <div class="post-list-body">
+          <a href="{{ post.url }}" class="post-list-title">{{ post.title }}</a>
+          {% if post.description %}
+          <p class="post-list-desc">{{ post.description }}</p>
+          {% endif %}
+          {% if post.tags %}
+          <div class="post-list-tags">
+            {% for tag in post.tags %}<span class="post-tag">{{ tag }}</span>{% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% if posts.size == 0 %}
+    <p class="post-empty">No posts yet. Check back soon.</p>
+    {% endif %}
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>&copy; {{ site.time | date: '%Y' }} {{ d.hero.name }} &middot; <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  </footer>
+
+  <script src="/assets/script.js"></script>
+</body>
+</html>

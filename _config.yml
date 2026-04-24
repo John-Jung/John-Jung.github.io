@@ -1,0 +1,22 @@
+title: John Jung
+description: Security Researcher
+url: "https://idont.kr"
+baseurl: ""
+email: "sungwuk98@gmail.com"
+
+collections:
+  pages:
+    output: true
+
+defaults:
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: profile
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - assets/CNAME

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How an Ordinary Person Got CVEs by Following Elite Hackers (feat: HEY, you can do it too!) — Sungwuk Jung</title>
+  <meta name="description" content="How I used AI to find vulnerabilities in TanStack Query and Apache Airflow and actually got CVEs assigned. Yes, you can do it too.">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/blog.css">
+  <link rel="stylesheet" href="/assets/syntax.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+
+  <!-- ── Top-right controls ───────────────────────────────── -->
+  <div class="top-controls">
+    <nav class="lang-switcher" aria-label="Language">
+      <a href="/posts/how-i-got-cves-with-ai/"    class="active">EN</a>
+      <span class="sep">|</span>
+      <a href="/ko/posts/how-i-got-cves-with-ai/" >KO</a>
+      <span class="sep">|</span>
+      <a href="/zh/posts/how-i-got-cves-with-ai/" >中</a>
+    </nav>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ── Post header (full width, above TOC+body split) ──── -->
+  <div class="post-container">
+    <a href="/posts/" class="post-back-link">← Blog</a>
+
+    <header class="post-header">
+      
+      <div class="post-header-tags">
+        <span class="post-tag">CVE</span><span class="post-tag">AI</span><span class="post-tag">Bug Hunting</span><span class="post-tag">Claude</span><span class="post-tag">Open Source</span>
+      </div>
+      
+      <h1 class="post-title">How an Ordinary Person Got CVEs by Following Elite Hackers (feat: HEY, you can do it too!)</h1>
+      <div class="post-meta">
+        <img src="/assets/profile.jpg" alt="Sungwuk Jung" class="post-avatar" width="28" height="28">
+        <span class="post-author">Sungwuk Jung</span>
+        <span class="post-meta-sep">&middot;</span>
+        <time datetime="2026-04-23">Apr 23, 2026</time>
+        
+        
+        
+        <span class="post-meta-sep">&middot;</span>
+        <span class="post-read-time">3 min read</span>
+      </div>
+    </header>
+  </div>
+
+  <!-- ── Body: TOC sidebar + Article ─────────────────────── -->
+  <div class="post-page-body">
+
+    <nav class="post-toc" id="post-toc" aria-label="Table of contents">
+      <!-- auto-generated from h2/h3 by post-toc.js -->
+    </nav>
+
+    <article class="post-main" id="post-main">
+      <div class="post-body">
+        <h2 id="introduction">Introduction</h2>
+
+<p>I’m a perfectly ordinary person.</p>
+
+<p>I majored in Computer Science, sure, but I had zero security experience before graduating. This time last year (April 2025), the only thing on my record was a single Stored XSS I’d reported to KISA — mostly by luck.</p>
+
+<p>Then, <strong>using AI, I discovered vulnerabilities in TanStack Query (50 million weekly npm downloads) and Apache Airflow — massive open-source projects — and actually got CVEs assigned.</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>CVE ID</th>
+      <th>Target</th>
+      <th>Vulnerability</th>
+      <th>Severity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CVE-2026-26903</td>
+      <td>TanStack Query (50M weekly DL)</td>
+      <td>DoS via Unbounded Recursion</td>
+      <td>Medium</td>
+    </tr>
+    <tr>
+      <td>CVE-2026-25604</td>
+      <td>Apache Airflow AWS Auth Manager</td>
+      <td>Host Header Injection</td>
+      <td>Medium</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>I wrote this post for anyone wondering “Could I actually do this?” — because the answer is <strong>yes, you can.</strong></p>
+
+<hr />
+
+<h2 id="the-beginning-finding-an-oasis-on-the-internet">The Beginning: Finding an Oasis on the Internet</h2>
+
+<p>It all started with a blog post by Seokchahn Yoon (ch4n3).</p>
+
+<blockquote>
+  <p><a href="https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-ko/">How a $5 Prompt Found a $2,418 Vulnerability</a></p>
+</blockquote>
+
+<p>I read that post countless times. Whenever I didn’t understand something, I’d feed it to Claude and have it explain — like 3 times</p>
+
+<p>I’d like to take this opportunity to sincerely thank Seokchan Yoon.</p>
+
+<hr />
+
+<h2 id="what-i-did-and-how-i-did-it">What I Did and How I Did It</h2>
+
+<h3 id="tools-claude-pro--claude-api">Tools: Claude Pro + Claude API</h3>
+
+<p>Nothing fancy. <strong>A Claude Pro subscription and the Claude API</strong> — that’s all I used.</p>
+
+<h3 id="step-1-building-a-scanner">Step 1: Building a Scanner</h3>
+
+<p>Based on Seokchan’s post, I instructed Claude to build a vulnerability scanner. I started with a simple structure (v1) and iterated to reduce false positives, <strong>evolving it to v3</strong>.</p>
+
+<p>The key was <strong>Trust Boundary Analysis</strong>. For example, even if a library function looks dangerous, if it’s a developer-facing API that the developer calls directly, that’s not a vulnerability. Automating this distinction was the core of scanner v3.</p>
+
+<h3 id="step-2-scanning-everything-in-sight">Step 2: Scanning Everything in Sight</h3>
+
+<p>I sorted popular open-source projects on Spring, npm, and other ecosystems by download count, then went through them one by one: <code class="language-plaintext highlighter-rouge">git clone</code> → scan, repeat.</p>
+
+<p><strong>I scanned over 100 repositories</strong>, investing the entire month of January 2026.</p>
+
+<h3 id="step-3-final-review-with-an-llm">Step 3: Final Review with an LLM</h3>
+
+<p>I fed the scanner results (XML) along with the actual source code back to Claude for final verification — is this a real finding or a false positive? Rather than blindly trusting the automated results, I used the LLM as a <strong>second-pass reviewer</strong>.</p>
+
+<h3 id="step-4-writing-and-submitting-reports">Step 4: Writing and Submitting Reports</h3>
+
+<p>For the reports, I had Claude study other people’s CVE reports and draft mine. Apart from the evidence (PoC screenshots, code), Claude wrote most of it and I just reviewed.</p>
+
+<h3 id="results">Results</h3>
+
+<ul>
+  <li><strong>Reports submitted</strong>: 4</li>
+  <li><strong>CVEs accepted</strong>: 2</li>
+  <li><strong>Time invested</strong>: ~1 month (January 2026)</li>
+  <li><strong>API cost</strong>: ~$50 USD (Claude Pro subscription separate)</li>
+</ul>
+
+<p>I scanned 100+ repos, submitted 4 reports, and 2 of them were accepted. The hit rate is quite low when you think about it. But those 2 became real CVEs.</p>
+
+<hr />
+
+<h2 id="insight-become-someone-who-uses-ai-well">Insight: Become Someone Who Uses AI Well</h2>
+
+<p>I had never hunted for CVEs before AI came along. I couldn’t even grasp the thought process that experienced researchers used to find vulnerabilities.</p>
+
+<p>But in the age of AI, <strong>I proved that even an ordinary person like me can get CVEs assigned.</strong></p>
+
+<p>Honestly, it feels great — but as someone who just entered the industry, it’s also a little scary wondering if AI will replace me.</p>
+
+<p>Still, after spending a month on this, there’s one thing I know for certain:</p>
+
+<p><strong>AI isn’t omnipotent. It performs only as well as the person using it.</strong></p>
+
+<p>Ask a dumb question, get a dumb answer. Ask a smart question, get a smart answer. Anyone who’s used AI probably knows exactly what I mean.</p>
+
+<p>At the end of the day, AI is a tool — and <strong>what matters is becoming someone who wields that tool well.</strong></p>
+
+<hr />
+
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+
+<p>I’m someone who, for one reason or another, started hacking and security later than most. I only really began after graduating.</p>
+
+<p>This time last year (April 2025), aside from one lucky Stored XSS report to KISA, I had nothing to show. Since then I’ve sought out talented researchers, studied with them, and gradually built up results in bug bounties.</p>
+
+<p>My goal at the start of this year (January 2026) was <strong>“I will get a CVE, no matter what!”</strong> — and somehow, through a messy and stumbling process, it actually happened.</p>
+
+<p><strong>I hope this post can be even a small help to ordinary people like me.</strong></p>
+
+<p>Thank you for reading.</p>
+
+<hr />
+
+<h3 id="related-links">Related Links</h3>
+
+<ul>
+  <li><strong>Scanner source code</strong>: <a href="https://github.com/John-Jung/AI-CVE-Scanner">github.com/John-Jung/AI-CVE-Scanner</a></li>
+  <li><strong>The post that started it all</strong>: <a href="https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-en/">How I Found a $2,418 Vulnerabilities with a $5 Prompt</a></li>
+</ul>
+
+      </div>
+
+      <footer class="post-footer">
+        <a href="/posts/" class="post-back-link">← Back to all posts</a>
+      </footer>
+    </article>
+
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Sungwuk Jung &middot; <a href="mailto:sungwuk98@gmail.com">sungwuk98@gmail.com</a></p>
+  </footer>
+
+  <script src="/assets/script.js"></script>
+  <script src="/assets/post-toc.js"></script>
+</body>
+</html>

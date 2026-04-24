@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html lang="zh" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一个普通人模仿顶级黑客获得 CVE 的经历 (副标题：你也得做到！) — 郑圣煜</title>
+  <meta name="description" content="利用 AI 在 TanStack Query 和 Apache Airflow 中发现漏洞并成功获得 CVE 的故事。你也得做到！">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/blog.css">
+  <link rel="stylesheet" href="/assets/syntax.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+
+  <!-- ── Top-right controls ───────────────────────────────── -->
+  <div class="top-controls">
+    <nav class="lang-switcher" aria-label="Language">
+      <a href="/posts/how-i-got-cves-with-ai/"    >EN</a>
+      <span class="sep">|</span>
+      <a href="/ko/posts/how-i-got-cves-with-ai/" >KO</a>
+      <span class="sep">|</span>
+      <a href="/zh/posts/how-i-got-cves-with-ai/" class="active">中</a>
+    </nav>
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ── Post header (full width, above TOC+body split) ──── -->
+  <div class="post-container">
+    <a href="/zh/posts/" class="post-back-link">← Blog</a>
+
+    <header class="post-header">
+      
+      <div class="post-header-tags">
+        <span class="post-tag">CVE</span><span class="post-tag">AI</span><span class="post-tag">漏洞挖掘</span><span class="post-tag">Claude</span><span class="post-tag">开源</span>
+      </div>
+      
+      <h1 class="post-title">一个普通人模仿顶级黑客获得 CVE 的经历 (副标题：你也得做到！)</h1>
+      <div class="post-meta">
+        <img src="/assets/profile.jpg" alt="郑圣煜" class="post-avatar" width="28" height="28">
+        <span class="post-author">郑圣煜</span>
+        <span class="post-meta-sep">&middot;</span>
+        <time datetime="2026-04-23">Apr 23, 2026</time>
+        
+        
+        
+        <span class="post-meta-sep">&middot;</span>
+        <span class="post-read-time">1 min read</span>
+      </div>
+    </header>
+  </div>
+
+  <!-- ── Body: TOC sidebar + Article ─────────────────────── -->
+  <div class="post-page-body">
+
+    <nav class="post-toc" id="post-toc" aria-label="Table of contents">
+      <!-- auto-generated from h2/h3 by post-toc.js -->
+    </nav>
+
+    <article class="post-main" id="post-main">
+      <div class="post-body">
+        <h2 id="前言">前言</h2>
+
+<p>我是一个极其普通的人。</p>
+
+<p>虽然我是计算机科学专业，但毕业前的安全经验为零。去年这个时候（2025年4月），我的全部成果不过是侥幸向 KISA 提交了一个 Stored XSS。</p>
+
+<p>然而，<strong>我利用 AI 在周下载量 5000 万次的 npm 包（TanStack Query）和 Apache Airflow 等大型开源项目中发现了漏洞，并成功获得了 CVE。</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>CVE ID</th>
+      <th>目标</th>
+      <th>漏洞类型</th>
+      <th>严重程度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CVE-2026-26903</td>
+      <td>TanStack Query（周下载 5000 万）</td>
+      <td>无限递归导致的 DoS</td>
+      <td>Medium</td>
+    </tr>
+    <tr>
+      <td>CVE-2026-25604</td>
+      <td>Apache Airflow AWS Auth Manager</td>
+      <td>Host Header 注入</td>
+      <td>Medium</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>这篇文章是写给那些在想”我也能做到吗？”的朋友们——因为答案是<strong>“是的，你也可以”</strong>。</p>
+
+<hr />
+
+<h2 id="开始在互联网上发现绿洲">开始：在互联网上发现绿洲</h2>
+
+<p>始于Seokchan Yoon的一篇博客文章。</p>
+
+<blockquote>
+  <p><a href="https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-en/">用 $5 的提示词找到价值 $2,418 的漏洞</a></p>
+</blockquote>
+
+<p>这篇文章我反复精读了无数遍。遇到不理解的地方就喂给 Claude 让它解释，如此反复。</p>
+
+<p>借此机会，向Seokchan Yoon先生表达诚挚的感谢。</p>
+
+<hr />
+
+<h2 id="我做了什么怎么做的">我做了什么，怎么做的？</h2>
+
+<h3 id="工具claude-pro--claude-api">工具：Claude Pro + Claude API</h3>
+
+<p>没有什么特别的工具。<strong>Claude Pro 订阅和 Claude API</strong>，仅此两样。</p>
+
+<h3 id="step-1构建扫描器">Step 1：构建扫描器</h3>
+
+<p>根据尹锡灿的文章，我指示 Claude 构建一个漏洞扫描器。从简单的结构（v1）开始，逐步减少误报（False Positive），<strong>迭代到 v3</strong>。</p>
+
+<p>核心是 <strong>Trust Boundary Analysis（信任边界分析）</strong>。例如，即使库中的某个函数看起来很危险，如果它是开发者直接调用的 API，那就不算漏洞。将这种区分自动化，就是扫描器 v3 的关键。</p>
+
+<h3 id="step-2疯狂扫描">Step 2：疯狂扫描</h3>
+
+<p>按下载量对 Spring、npm 等热门开源项目进行排序，然后逐个 <code class="language-plaintext highlighter-rouge">git clone</code> → 扫描，不断重复。</p>
+
+<p><strong>总共扫描了 100 多个仓库</strong>，投入了 2026 年 1 月整整一个月。</p>
+
+<h3 id="step-3用-llm-进行最终审查">Step 3：用 LLM 进行最终审查</h3>
+
+<p>将扫描器的结果（XML）连同实际源代码一起交给 Claude，进行最终审查——是真实的发现还是误报？我没有盲目信任自动化结果，而是将 LLM 作为<strong>二次审核员</strong>来使用。</p>
+
+<h3 id="step-4撰写并提交报告">Step 4：撰写并提交报告</h3>
+
+<p>报告撰写方面，我让 Claude 学习了其他人的 CVE 报告后代为起草。除了证据（PoC 截图、代码）之外，几乎都是 Claude 撰写的，我只负责审核。</p>
+
+<h3 id="结果">结果</h3>
+
+<ul>
+  <li><strong>提交的报告</strong>：4 份</li>
+  <li><strong>获得的 CVE</strong>：2 个</li>
+  <li><strong>投入时间</strong>：约 1 个月（2026 年 1 月）</li>
+  <li><strong>API 费用</strong>：约 350 元人民币（Claude Pro 订阅费另计）</li>
+</ul>
+
+<p>扫描了 100 多个仓库，提交了 4 份报告，其中 2 份被认可。命中率其实很低。但那 2 个成为了真正的 CVE。</p>
+
+<hr />
+
+<h2 id="感悟成为善用-ai-的人">感悟：成为善用 AI 的人</h2>
+
+<p>我是一个在 AI 出现之前从未尝试过寻找 CVE 的人。那些前辈们到底用什么样的思维过程来发现漏洞，我完全摸不着头脑。</p>
+
+<p>但在 AI 时代，<strong>我亲自证明了即使是像我这样的普通人也能获得 CVE。</strong></p>
+
+<p>说实话，既高兴又害怕——作为一个刚入行的新人，担心会被 AI 取代。</p>
+
+<p>但经过一个月的实践，有一点我非常确定：</p>
+
+<p><strong>AI 并非万能。它只能发挥使用者本身能力的水平。</strong></p>
+
+<p>问题问得蠢，答案就蠢；问题问得聪明，答案就聪明。用过 AI 的人应该都能感同身受。</p>
+
+<p>归根结底，AI 是工具，<strong>重要的是成为善于使用这个工具的人</strong>。</p>
+
+<hr />
+
+<h2 id="结语">结语</h2>
+
+<p>我是一个阴差阳错比别人晚起步进入黑客/安全领域的人。毕业后才真正开始。</p>
+
+<p>去年这个时候（2025年4月），除了凭运气向 KISA 提交了一个 Stored XSS 之外，几乎没有什么成果。此后，我主动拜访了各路高手，一起学习研究，在漏洞赏金方面也逐渐取得了一些成果。</p>
+
+<p>今年年初（2026年1月）的目标是<strong>“无论如何一定要拿到 CVE！”</strong>——跌跌撞撞之中，竟然真的实现了。</p>
+
+<p><strong>希望这篇文章能对像我一样的普通人有哪怕一点帮助。</strong></p>
+
+<p>感谢您阅读到这里。</p>
+
+<hr />
+
+<h3 id="相关链接">相关链接</h3>
+
+<ul>
+  <li><strong>扫描器源代码</strong>：<a href="https://github.com/John-Jung/AI-CVE-Scanner">github.com/John-Jung/AI-CVE-Scanner</a></li>
+  <li><strong>参考文章</strong>：<a href="https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-en/">用 $5 的提示词找到价值 $2,418 的漏洞</a></li>
+</ul>
+
+      </div>
+
+      <footer class="post-footer">
+        <a href="/zh/posts/" class="post-back-link">← Back to all posts</a>
+      </footer>
+    </article>
+
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>&copy; 2026 郑圣煜 &middot; <a href="mailto:sungwuk98@gmail.com">sungwuk98@gmail.com</a></p>
+  </footer>
+
+  <script src="/assets/script.js"></script>
+  <script src="/assets/post-toc.js"></script>
+</body>
+</html>
