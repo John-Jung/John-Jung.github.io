@@ -57,7 +57,7 @@ I sorted popular open-source projects on Spring, npm, and other ecosystems by do
 
 ### Step 3: Final Review with an LLM
 
-I fed the scanner results (XML) along with the actual source code back to Claude for final verification — is this a real finding or a false positive? Rather than blindly trusting the automated results, I used the LLM as a **second-pass reviewer**.
+I submitted both the scanner results (XML) and the actual source code to Claude for a final review to determine whether the findings were false positives. As a result, I obtained the final classification of each finding as either a False Positive or Valid.
 
 ### Step 4: Writing and Submitting Reports
 

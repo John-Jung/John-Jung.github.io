@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "一个普通人模仿顶级黑客获得 CVE 的经历 (副标题：你也得做到！)"
+title: "一个普通人模仿顶级黑客获得 CVE 的经历 (副标题：你也得做到)"
 description: "利用 AI 在 TanStack Query 和 Apache Airflow 中发现漏洞并成功获得 CVE 的故事。你也得做到！"
 date: 2026-04-23
 lang: zh
@@ -57,7 +57,7 @@ tags: [CVE, AI, 漏洞挖掘, Claude, 开源]
 
 ### Step 3：用 LLM 进行最终审查
 
-将扫描器的结果（XML）连同实际源代码一起交给 Claude，进行最终审查——是真实的发现还是误报？我没有盲目信任自动化结果，而是将 LLM 作为**二次审核员**来使用。
+我将扫描器结果（XML）和实际源代码一并提交给Claude进行最终审核，以判断这些结果是否属于误报。最终，我获得了每个结果是误报（False Positive）还是有效（Valid）的结论。
 
 ### Step 4：撰写并提交报告
 
