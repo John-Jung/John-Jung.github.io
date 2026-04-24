@@ -47,30 +47,108 @@ Nothing fancy. **A Claude Pro subscription and the Claude API** — that's all I
 
 Based on Seokchan's post, I instructed Claude to build a vulnerability scanner. I started with a simple structure (v1) and iterated to reduce false positives, **evolving it to v3**.
 
-The key was **Trust Boundary Analysis**. For example, even if a library function looks dangerous, if it's a developer-facing API that the developer calls directly, that's not a vulnerability. Automating this distinction was the core of scanner v3.
+What surprised me was that Claude upgraded itself. When I kept feeding v1's results back to the LLM, it would say things like "If we restructure the detection logic this way, we can improve both cost efficiency and the false positive rate" — and that's how v2 and v3 were born.
 
-### Step 2: Scanning Everything in Sight
+Here's what Claude built across v1 through v3.
 
-I sorted popular open-source projects on Spring, npm, and other ecosystems by download count, then went through them one by one: `git clone` → scan, repeat.
+#### v1: "Just Find Bugs" — The Naïve Approach
 
-**I scanned over 100 repositories**, investing the entire month of January 2026.
+> "You are a security researcher. Find security vulnerabilities in the code."
 
-### Step 3: Final Review with an LLM
+That's almost literally the entire system prompt. The architecture was just:
 
-I submitted both the scanner results (XML) and the actual source code to Claude for a final review to determine whether the findings were false positives. As a result, I obtained the final classification of each finding as either a False Positive or Valid.
+1. Clone a repo
+2. Chunk the source files into ~25K token blocks
+3. Send each chunk to Claude with a single prompt
+4. Parse the XML results
 
-### Step 4: Writing and Submitting Reports
+It worked — technically. The problem? **It reported everything.** A library function that takes a `command` parameter? "Command Injection!" A developer-facing API that accepts file paths? "Path Traversal!" A config option that lets you set a database URL? "SSRF!"
 
-For the reports, I had Claude study other people's CVE reports and draft mine. Apart from the evidence (PoC screenshots, code), Claude wrote most of it and I just reviewed.
+I tested it on a handful of repos and got hundreds of findings. Almost all of them were garbage. The false positive rate was probably over 95%.
+
+That's when Claude realized: the scanner had no concept of **"who is calling this function?"** It treated every parameter as if an attacker typed it in.
+
+---
+
+#### v2: Multi-Phase Pipeline — Adding a Skeptic
+
+The key insight for v2 was: **don't just find bugs, try to disprove them too.**
+
+I restructured the scanner into a multi-phase pipeline:
+
+- **Phase 1 — Reconnaissance**: Instead of diving straight into vulnerability hunting, first map the attack surface. Where are the HTTP handlers? Where are the dangerous sinks like `eval()` or `exec()`? Which files even deserve deep analysis?
+- **Phase 2 — Deep Analysis**: Only analyze the files flagged by recon. The prompt now demands a concrete attack vector — if you can't describe how to exploit it step by step, don't report it.
+- **Phase 3 — Adversarial Validation**: This was the game-changer. I send each finding back to Claude with a different persona: *"You are a skeptical security reviewer. Your job is to DISPROVE this finding."* It checks: Is the input actually user-controlled? Is there sanitization? Is this code path even reachable in production?
+
+I also added a file priority scoring system. Files with HTTP route handlers (`app.get()`, `@PostMapping`) and user input patterns (`req.body`, `request.form`) got boosted. Test files, config files, and dev-only code got filtered out automatically.
+
+This cut the false positive rate significantly. But there was still a fundamental problem that v2 couldn't solve...
+
+---
+
+#### v3: Trust Boundary Analysis — The Breakthrough
+
+While running v2, I kept seeing the same pattern of false positives:
+
+> "This library has a function called `execute(query)` that runs SQL without parameterization — SQL Injection!"
+
+except the function is a **library API**. The developer who imports this library *chooses* what to pass to it. The developer is trusted. This is not a vulnerability — it's a feature.
+
+This was the single biggest source of false positives when scanning npm packages and Java libraries. So I built **Phase 0: Target Classification**.
+
+Before any scanning begins, v3 first answers: **"What IS this codebase?"**
+
+It classifies targets into four trust models:
+
+| Type | Who's trusted? | What counts as a real vulnerability? |
+|------|---------------|--------------------------------------|
+| **APPLICATION** | Users are untrusted | HTTP input → dangerous sink |
+| **LIBRARY** | Developers are trusted | Only if external data reaches sinks WITHOUT developer mediation |
+| **FRAMEWORK** | Plugin developers are trusted | Only core framework mishandling user input |
+| **CLI_TOOL** | Mixed | Processed files & network responses |
+
+The scanner detects the type by looking at `package.json` fields (`main`, `module`, `exports` → library), code patterns (`app.get()`, `req.body` → application), and structural indicators.
+
+Then **every subsequent phase uses this trust context.** The recon prompt asks different questions for libraries vs. applications. The deep analysis prompt has trust-specific rules. And critically — any finding flagged as `requires_malicious_developer: true` gets automatically filtered out for library targets.
+
+**This was the version that found both CVEs.** The trust boundary filter eliminated the noise, and the real vulnerabilities — where **untrusted end-user input** actually reached a dangerous sink — stood out clearly.
+
+---
+
+#### How I Actually Built It
+
+I'll be honest: **I didn't write most of the code by hand.**
+
+My workflow was:
+
+1. **Read and understand** Seokchan's original approach thoroughly
+2. **Describe what I wanted** to Claude in detail — the architecture, the phases, the prompts
+3. **Review the output** — this is where my security knowledge mattered
+4. **Test against real repos** and analyze the failures
+5. **Feed the failures back** to Claude: "This is a false positive. Why did it happen? How do we prevent it?"
+6. **Iterate** — v1 → v2 → v3 each came from understanding WHY the previous version failed
+
+**The key here, I think, is being able to judge whether Claude's suggested upgrade actually makes sense. If I had blindly accepted every version upgrade just because Claude proposed it, the scanner could have easily gotten worse instead of better.**
+
+### Step 2: Scan-> Review-> Submit
+
+Once the scanner was finalized at v3, I created reports based on the results and submitted them.
+
+I sorted popular open-source projects — Spring, npm packages, and more — by download count, then went through them one by one: `git clone` → scan → repeat. **Over 100 repositories scanned**, with the entire month of January 2026 dedicated to this.
+
+The scanner's raw output (XML) wasn't ready to be a report on its own. I fed each result alongside the actual source code back to Claude for **a final review — is this a false positive or a valid vulnerability?** Rather than blindly trusting the automated results, I used the LLM as a second-pass verifier.
+
+For the findings that passed final review, I wrote up reports and submitted them. Even the report writing was AI-assisted — I had Claude study other people's CVE reports and generate drafts. Everything except the evidence (PoC screenshots, code) was written by Claude and reviewed by me.
 
 ### Results
 
+- **Repos scanned**: 100+
 - **Reports submitted**: 4
-- **CVEs accepted**: 2
-- **Time invested**: ~1 month (January 2026)
-- **API cost**: ~$50 USD (Claude Pro subscription separate)
+- **CVEs awarded**: 2
+- **Time spent**: ~1 month (January 2026)
+- **API cost**: ~₩70,000 (~$50 USD), Claude Pro subscription separate
 
-I scanned 100+ repos, submitted 4 reports, and 2 of them were accepted. The hit rate is quite low when you think about it. But those 2 became real CVEs.
+Over 100 repos scanned, 4 reports submitted, 2 accepted as CVEs. The hit rate is brutally low. 
 
 ---
 

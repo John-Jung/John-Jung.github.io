@@ -59,7 +59,7 @@
         
         
         <span class="post-meta-sep">&middot;</span>
-        <span class="post-read-time">3 min read</span>
+        <span class="post-read-time">8 min read</span>
       </div>
     </header>
   </div>
@@ -134,32 +134,145 @@
 
 <p>Based on Seokchan’s post, I instructed Claude to build a vulnerability scanner. I started with a simple structure (v1) and iterated to reduce false positives, <strong>evolving it to v3</strong>.</p>
 
-<p>The key was <strong>Trust Boundary Analysis</strong>. For example, even if a library function looks dangerous, if it’s a developer-facing API that the developer calls directly, that’s not a vulnerability. Automating this distinction was the core of scanner v3.</p>
+<p>What surprised me was that Claude upgraded itself. When I kept feeding v1’s results back to the LLM, it would say things like “If we restructure the detection logic this way, we can improve both cost efficiency and the false positive rate” — and that’s how v2 and v3 were born.</p>
 
-<h3 id="step-2-scanning-everything-in-sight">Step 2: Scanning Everything in Sight</h3>
+<p>Here’s what Claude built across v1 through v3.</p>
 
-<p>I sorted popular open-source projects on Spring, npm, and other ecosystems by download count, then went through them one by one: <code class="language-plaintext highlighter-rouge">git clone</code> → scan, repeat.</p>
+<h4 id="v1-just-find-bugs--the-naïve-approach">v1: “Just Find Bugs” — The Naïve Approach</h4>
 
-<p><strong>I scanned over 100 repositories</strong>, investing the entire month of January 2026.</p>
+<blockquote>
+  <p>“You are a security researcher. Find security vulnerabilities in the code.”</p>
+</blockquote>
 
-<h3 id="step-3-final-review-with-an-llm">Step 3: Final Review with an LLM</h3>
+<p>That’s almost literally the entire system prompt. The architecture was just:</p>
 
-<p>I fed the scanner results (XML) along with the actual source code back to Claude for final verification — is this a real finding or a false positive? Rather than blindly trusting the automated results, I used the LLM as a <strong>second-pass reviewer</strong>.</p>
+<ol>
+  <li>Clone a repo</li>
+  <li>Chunk the source files into ~25K token blocks</li>
+  <li>Send each chunk to Claude with a single prompt</li>
+  <li>Parse the XML results</li>
+</ol>
 
-<h3 id="step-4-writing-and-submitting-reports">Step 4: Writing and Submitting Reports</h3>
+<p>It worked — technically. The problem? <strong>It reported everything.</strong> A library function that takes a <code class="language-plaintext highlighter-rouge">command</code> parameter? “Command Injection!” A developer-facing API that accepts file paths? “Path Traversal!” A config option that lets you set a database URL? “SSRF!”</p>
 
-<p>For the reports, I had Claude study other people’s CVE reports and draft mine. Apart from the evidence (PoC screenshots, code), Claude wrote most of it and I just reviewed.</p>
+<p>I tested it on a handful of repos and got hundreds of findings. Almost all of them were garbage. The false positive rate was probably over 95%.</p>
+
+<p>That’s when Claude realized: the scanner had no concept of <strong>“who is calling this function?”</strong> It treated every parameter as if an attacker typed it in.</p>
+
+<hr />
+
+<h4 id="v2-multi-phase-pipeline--adding-a-skeptic">v2: Multi-Phase Pipeline — Adding a Skeptic</h4>
+
+<p>The key insight for v2 was: <strong>don’t just find bugs, try to disprove them too.</strong></p>
+
+<p>I restructured the scanner into a multi-phase pipeline:</p>
+
+<ul>
+  <li><strong>Phase 1 — Reconnaissance</strong>: Instead of diving straight into vulnerability hunting, first map the attack surface. Where are the HTTP handlers? Where are the dangerous sinks like <code class="language-plaintext highlighter-rouge">eval()</code> or <code class="language-plaintext highlighter-rouge">exec()</code>? Which files even deserve deep analysis?</li>
+  <li><strong>Phase 2 — Deep Analysis</strong>: Only analyze the files flagged by recon. The prompt now demands a concrete attack vector — if you can’t describe how to exploit it step by step, don’t report it.</li>
+  <li><strong>Phase 3 — Adversarial Validation</strong>: This was the game-changer. I send each finding back to Claude with a different persona: <em>“You are a skeptical security reviewer. Your job is to DISPROVE this finding.”</em> It checks: Is the input actually user-controlled? Is there sanitization? Is this code path even reachable in production?</li>
+</ul>
+
+<p>I also added a file priority scoring system. Files with HTTP route handlers (<code class="language-plaintext highlighter-rouge">app.get()</code>, <code class="language-plaintext highlighter-rouge">@PostMapping</code>) and user input patterns (<code class="language-plaintext highlighter-rouge">req.body</code>, <code class="language-plaintext highlighter-rouge">request.form</code>) got boosted. Test files, config files, and dev-only code got filtered out automatically.</p>
+
+<p>This cut the false positive rate significantly. But there was still a fundamental problem that v2 couldn’t solve…</p>
+
+<hr />
+
+<h4 id="v3-trust-boundary-analysis--the-breakthrough">v3: Trust Boundary Analysis — The Breakthrough</h4>
+
+<p>While running v2, I kept seeing the same pattern of false positives:</p>
+
+<blockquote>
+  <p>“This library has a function called <code class="language-plaintext highlighter-rouge">execute(query)</code> that runs SQL without parameterization — SQL Injection!”</p>
+</blockquote>
+
+<p>except the function is a <strong>library API</strong>. The developer who imports this library <em>chooses</em> what to pass to it. The developer is trusted. This is not a vulnerability — it’s a feature.</p>
+
+<p>This was the single biggest source of false positives when scanning npm packages and Java libraries. So I built <strong>Phase 0: Target Classification</strong>.</p>
+
+<p>Before any scanning begins, v3 first answers: <strong>“What IS this codebase?”</strong></p>
+
+<p>It classifies targets into four trust models:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Who’s trusted?</th>
+      <th>What counts as a real vulnerability?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>APPLICATION</strong></td>
+      <td>Users are untrusted</td>
+      <td>HTTP input → dangerous sink</td>
+    </tr>
+    <tr>
+      <td><strong>LIBRARY</strong></td>
+      <td>Developers are trusted</td>
+      <td>Only if external data reaches sinks WITHOUT developer mediation</td>
+    </tr>
+    <tr>
+      <td><strong>FRAMEWORK</strong></td>
+      <td>Plugin developers are trusted</td>
+      <td>Only core framework mishandling user input</td>
+    </tr>
+    <tr>
+      <td><strong>CLI_TOOL</strong></td>
+      <td>Mixed</td>
+      <td>Processed files &amp; network responses</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The scanner detects the type by looking at <code class="language-plaintext highlighter-rouge">package.json</code> fields (<code class="language-plaintext highlighter-rouge">main</code>, <code class="language-plaintext highlighter-rouge">module</code>, <code class="language-plaintext highlighter-rouge">exports</code> → library), code patterns (<code class="language-plaintext highlighter-rouge">app.get()</code>, <code class="language-plaintext highlighter-rouge">req.body</code> → application), and structural indicators.</p>
+
+<p>Then <strong>every subsequent phase uses this trust context.</strong> The recon prompt asks different questions for libraries vs. applications. The deep analysis prompt has trust-specific rules. And critically — any finding flagged as <code class="language-plaintext highlighter-rouge">requires_malicious_developer: true</code> gets automatically filtered out for library targets.</p>
+
+<p><strong>This was the version that found both CVEs.</strong> The trust boundary filter eliminated the noise, and the real vulnerabilities — where <strong>untrusted end-user input</strong> actually reached a dangerous sink — stood out clearly.</p>
+
+<hr />
+
+<h4 id="how-i-actually-built-it">How I Actually Built It</h4>
+
+<p>I’ll be honest: <strong>I didn’t write most of the code by hand.</strong></p>
+
+<p>My workflow was:</p>
+
+<ol>
+  <li><strong>Read and understand</strong> Seokchan’s original approach thoroughly</li>
+  <li><strong>Describe what I wanted</strong> to Claude in detail — the architecture, the phases, the prompts</li>
+  <li><strong>Review the output</strong> — this is where my security knowledge mattered</li>
+  <li><strong>Test against real repos</strong> and analyze the failures</li>
+  <li><strong>Feed the failures back</strong> to Claude: “This is a false positive. Why did it happen? How do we prevent it?”</li>
+  <li><strong>Iterate</strong> — v1 → v2 → v3 each came from understanding WHY the previous version failed</li>
+</ol>
+
+<p><strong>The key here, I think, is being able to judge whether Claude’s suggested upgrade actually makes sense. If I had blindly accepted every version upgrade just because Claude proposed it, the scanner could have easily gotten worse instead of better.</strong></p>
+
+<h3 id="step-2-scan--review--submit">Step 2: Scan-&gt; Review-&gt; Submit</h3>
+
+<p>Once the scanner was finalized at v3, I created reports based on the results and submitted them.</p>
+
+<p>I sorted popular open-source projects — Spring, npm packages, and more — by download count, then went through them one by one: <code class="language-plaintext highlighter-rouge">git clone</code> → scan → repeat. <strong>Over 100 repositories scanned</strong>, with the entire month of January 2026 dedicated to this.</p>
+
+<p>The scanner’s raw output (XML) wasn’t ready to be a report on its own. I fed each result alongside the actual source code back to Claude for <strong>a final review — is this a false positive or a valid vulnerability?</strong> Rather than blindly trusting the automated results, I used the LLM as a second-pass verifier.</p>
+
+<p>For the findings that passed final review, I wrote up reports and submitted them. Even the report writing was AI-assisted — I had Claude study other people’s CVE reports and generate drafts. Everything except the evidence (PoC screenshots, code) was written by Claude and reviewed by me.</p>
 
 <h3 id="results">Results</h3>
 
 <ul>
+  <li><strong>Repos scanned</strong>: 100+</li>
   <li><strong>Reports submitted</strong>: 4</li>
-  <li><strong>CVEs accepted</strong>: 2</li>
-  <li><strong>Time invested</strong>: ~1 month (January 2026)</li>
-  <li><strong>API cost</strong>: ~$50 USD (Claude Pro subscription separate)</li>
+  <li><strong>CVEs awarded</strong>: 2</li>
+  <li><strong>Time spent</strong>: ~1 month (January 2026)</li>
+  <li><strong>API cost</strong>: ~₩70,000 (~$50 USD), Claude Pro subscription separate</li>
 </ul>
 
-<p>I scanned 100+ repos, submitted 4 reports, and 2 of them were accepted. The hit rate is quite low when you think about it. But those 2 became real CVEs.</p>
+<p>Over 100 repos scanned, 4 reports submitted, 2 accepted as CVEs. The hit rate is brutally low.</p>
 
 <hr />
 
