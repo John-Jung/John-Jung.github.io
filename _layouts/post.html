@@ -24,6 +24,17 @@
   <script>
     (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
   </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ page.description | default: page.excerpt | strip_html | truncate: 160 }}">
+  <meta property="og:image" content="{{ '/android-chrome-512x512.png' | absolute_url }}">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ page.title }}">
+  <meta name="twitter:description" content="{{ page.description | default: page.excerpt | strip_html | truncate: 160 }}">
+  <meta name="twitter:image" content="{{ '/android-chrome-512x512.png' | absolute_url }}">
 </head>
 <body>
 

@@ -19,6 +19,17 @@
   <script>
     (function(){var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);})();
   </script>
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="Blog — {{ d.hero.name }}">
+  <meta property="og:description" content="Blog posts by {{ d.hero.name }}">
+  <meta property="og:image" content="{{ '/android-chrome-512x512.png' | absolute_url }}">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Blog — {{ d.hero.name }}">
+  <meta name="twitter:description" content="Blog posts by {{ d.hero.name }}">
+  <meta name="twitter:image" content="{{ '/android-chrome-512x512.png' | absolute_url }}">
 </head>
 <body>
 
