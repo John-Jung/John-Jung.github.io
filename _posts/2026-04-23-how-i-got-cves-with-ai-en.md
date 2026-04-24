@@ -16,10 +16,10 @@ I majored in Computer Science, sure, but I had zero security experience before g
 
 Then, **using AI, I discovered vulnerabilities in TanStack Query (50 million weekly npm downloads) and Apache Airflow — massive open-source projects — and actually got CVEs assigned.**
 
-| CVE ID | Target | Vulnerability | Severity |
-|--------|--------|---------------|----------|
-| CVE-2026-26903 | TanStack Query | DoS via Unbounded Recursion | Medium |
-| CVE-2026-25604 | Apache Airflow AWS Auth Manager | Host Header Injection | Medium |
+| CVE ID | Target | Vulnerability |
+|--------|--------|---------------|
+| CVE-2026-26903 | TanStack Query | DoS via Unbounded Recursion | |
+| CVE-2026-25604 | Apache Airflow AWS Auth Manager | Host Header Injection |
 
 I wrote this post for anyone wondering **Could I actually do this?** — because the answer is **yes, you can.**
 

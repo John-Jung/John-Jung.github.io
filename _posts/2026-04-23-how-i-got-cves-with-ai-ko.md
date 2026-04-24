@@ -17,10 +17,10 @@ tags: [CVE, AI, Bug Hunting, Claude, 오픈소스]
 
 그런데 **AI를 활용해서 주간 다운로드 5천만 회의 npm 패키지(TanStack Query)와 Apache Airflow 같은 거대 오픈소스에서 취약점을 발견하고, 실제로 CVE를 발급받았습니다.**
 
-| CVE ID | 대상 | 취약점 | 심각도 |
+| CVE ID | 대상 | 취약점 | 
 |--------|------|--------|--------|
-| CVE-2026-26903 | TanStack Query | DoS via Unbounded Recursion | Medium |
-| CVE-2026-25604 | Apache Airflow AWS Auth Manager | Host Header Injection | Medium |
+| CVE-2026-26903 | TanStack Query | DoS via Unbounded Recursion | |
+| CVE-2026-25604 | Apache Airflow AWS Auth Manager | Host Header Injection | 
 
 이 글은 **나도 할 수 있을까?** 고민하시는 분들께 **야, 너두 할 수 있어** 라고 말씀드리고 싶어서 쓰게 되었습니다.
 
