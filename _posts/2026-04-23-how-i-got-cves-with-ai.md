@@ -66,7 +66,7 @@ It worked — technically. The problem? **It reported everything.** A library fu
 
 I tested it on a handful of repos and got hundreds of findings. Almost all of them were garbage. The false positive rate was probably over 95%.
 
-That's when Claude realized: the scanner had no concept of **"who is calling this function?"** It treated every parameter as if an attacker typed it in.
+That's when Claude realized: the scanner had no concept of **who is calling this function?** It treated every parameter as if an attacker typed it in.
 
 ---
 
