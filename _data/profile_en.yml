@@ -16,7 +16,6 @@ hero:
   description: >
     I'm Sungwuk, a Security Researcher with a passion for breaking things to make them safer! I'm currently focusing on Web/Mobile Penetration Testing and Red Teaming — always hunting for vulnerabilities and pushing security boundaries.
   highlights:
-    - "CVEs — found with Claude"
     - "Multiple KVE / FVE findings via KISA, Korea Financial Security Institute, and FindtheGap"
     - "Penetration testing and Red Teaming experience across finance, public sector, healthcare, and critical infrastructure"
   socials:
