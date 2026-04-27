@@ -119,6 +119,9 @@
         {% if d.projects %}
         <li><a href="#projects" class="toc-link">{{ d.labels.projects | default: "Projects" }}</a></li>
         {% endif %}
+        {% if d.certifications %}
+        <li><a href="#certifications" class="toc-link">{{ d.labels.certifications | default: "Certifications" }}</a></li>
+        {% endif %}
         {% if d.blog_posts %}
         <li><a href="#blog" class="toc-link">{{ d.labels.blog | default: "Blog Posts" }}</a></li>
         {% endif %}
