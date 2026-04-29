@@ -21,18 +21,18 @@ tags: [HackTheBox, Linux, SUID, Privilege Escalation]
 
 ## 目录
 
-- 01 — 信息收集
-- 02 — FTP 匿名登录与 JAR 分析
-- 03 — 通过 CVE-2022-46364 实现 XOP/MTOM SSRF
-- 04 — Hoverfly 身份认证
+- 01 — Reconnaissance
+- 02 — FTP Anonymous Login & JAR Analysis
+- 03 — XOP/MTOM SSRF via CVE-2022-46364
+- 04 — Hoverfly Authentication
 - 05 — Hoverfly Middleware RCE (CVE-2025-54123)
 - 06 — User Flag
-- 07 — 权限提升枚举
-- 08 — 替换 Bash 二进制以获取 root
+- 07 — Privilege Escalation Enumeration
+- 08 — Bash Binary Swap to Root
 
 ---
 
-## 01 — 信息收集
+## 01 — Reconnaissance
 
 对全端口进行扫描。
 
@@ -55,7 +55,7 @@ tags: [HackTheBox, Linux, SUID, Privilege Escalation]
 
 ---
 
-## 02 — FTP 匿名登录与 JAR 分析
+## 02 — FTP Anonymous Login & JAR Analysis
 
 从 FTP 服务器下载 `employee-service.jar` 文件。
 
@@ -104,7 +104,7 @@ tags: [HackTheBox, Linux, SUID, Privilege Escalation]
 
 ---
 
-## 03 — 通过 CVE-2022-46364 实现 XOP/MTOM SSRF
+## 03 — XOP/MTOM SSRF via CVE-2022-46364
 
 确认 WSDL 请求可以正常工作。
 
@@ -141,7 +141,7 @@ base64 解码后确认 `/etc/passwd` 明文内容。
 
 ---
 
-## 04 — Hoverfly 身份认证
+## 04 — Hoverfly Authentication
 
 为了在 CLI 上处理 JSON 请求，安装 `jq`。
 
@@ -203,7 +203,7 @@ base64 解码后确认 `/etc/passwd` 明文内容。
 
 ---
 
-## 07 — 权限提升枚举
+## 07 — Privilege Escalation Enumeration
 
 枚举 sudo 权限发现，当前用户 `dev_ryan` 可以无密码以 root 权限执行 `/opt/syswatch/syswatch.sh`。
 
@@ -224,7 +224,7 @@ base64 解码后确认 `/etc/passwd` 明文内容。
 
 ---
 
-## 08 — 替换 Bash 二进制以获取 root
+## 08 — Bash Binary Swap to Root
 
 **思路：** 执行 `sudo /opt/syswatch/syswatch.sh` 时，该脚本内部会**以 root 权限运行 bash**。
 
