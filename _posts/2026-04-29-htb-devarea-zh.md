@@ -11,7 +11,7 @@ tags: [HackTheBox, Linux, SUID, Privilege Escalation]
 
 # DevArea
 
->https://app.hackthebox.com/machines/DevArea
+>[https://app.hackthebox.com/machines/DevArea](https://app.hackthebox.com/machines/DevArea)
 
 **Machine:** DevArea<br>
 **Difficulty:** Medium<br>
