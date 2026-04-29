@@ -61,31 +61,49 @@
     </header>
 
     <!-- ── Post list ────────────────────────────────────────── -->
-    <ul class="post-list">
-      {% for post in posts %}
-      <li class="post-list-item">
-        <time class="post-date" datetime="{{ post.date | date: '%Y-%m-%d' }}">
-          {{ post.date | date: "%b %d, %Y" }}
-        </time>
-        <div class="post-list-body">
-          <a href="{{ post.url }}" class="post-list-title">{{ post.title }}</a>
-          {% if post.description %}
-          <p class="post-list-desc">{{ post.description }}</p>
-          {% endif %}
-          {% if post.tags %}
-          <div class="post-list-tags">
-            {% for tag in post.tags %}<span class="post-tag">{{ tag }}</span>{% endfor %}
-          </div>
-          {% endif %}
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
-
     {% if posts.size == 0 %}
     <p class="post-empty">No posts yet. Check back soon.</p>
+    {% else %}
+      <div class="post-filter" role="tablist">
+        <button class="post-filter-btn active" data-filter="all" type="button">
+          {{ d.all_label | default: "All" }}
+        </button>
+        {% for cat in d.categories %}
+          {% assign cat_key = cat[0] %}
+          {% assign cat_label = cat[1] %}
+          {% assign cat_posts = posts | where: "category", cat_key %}
+          {% if cat_posts.size > 0 %}
+            <button class="post-filter-btn" data-filter="{{ cat_key }}" type="button">
+              {{ cat_label }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% assign sorted = posts | sort: "date" | reverse %}
+      <ul class="post-list">
+        {% for post in sorted %}
+        <li class="post-list-item" data-category="{{ post.category }}">
+          <time class="post-date" datetime="{{ post.date | date: '%Y-%m-%d' }}">
+            {{ post.date | date: "%b %d, %Y" }}
+          </time>
+          <div class="post-list-body">
+            <a href="{{ post.url }}" class="post-list-title">{{ post.title }}</a>
+            {% if post.description %}
+            <p class="post-list-desc">{{ post.description }}</p>
+            {% endif %}
+            {% if post.tags %}
+            <div class="post-list-tags">
+              {% for tag in post.tags %}<span class="post-tag">{{ tag }}</span>{% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <p class="post-empty post-empty-filtered" hidden>No posts in this category yet.</p>
     {% endif %}
-  </div>
 
   <!-- ── Footer ───────────────────────────────────────────── -->
   <footer class="site-footer">
@@ -93,5 +111,36 @@
   </footer>
 
   <script src="/assets/script.js"></script>
+  <script>
+  (function() {
+    const buttons = document.querySelectorAll('.post-filter-btn');
+    const items = document.querySelectorAll('.post-list-item');
+    const emptyMsg = document.querySelector('.post-empty-filtered');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        buttons.forEach(b => b.classList.toggle('active', b === btn));
+
+        let visible = 0;
+        items.forEach(item => {
+          const show = filter === 'all' || item.dataset.category === filter;
+          if (show) {
+            item.style.display = '';
+            item.style.animation = 'none';
+            void item.offsetWidth;
+            item.style.animation = 'fadeInUp 0.8s ease forwards';
+            visible++;
+          } else {
+            item.style.display = 'none';
+            item.style.animation = '';
+          }
+        });
+
+        if (emptyMsg) emptyMsg.hidden = visible > 0;
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

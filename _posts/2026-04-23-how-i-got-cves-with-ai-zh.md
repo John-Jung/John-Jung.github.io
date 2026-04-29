@@ -5,6 +5,7 @@ description: "利用 AI 在 TanStack Query 和 Apache Airflow 中发现漏洞并
 date: 2026-04-23
 lang: zh
 permalink: /zh/posts/how-i-got-cves-with-ai/
+category: research
 tags: [CVE, AI, 漏洞挖掘, Claude, 开源]
 ---
 

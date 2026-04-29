@@ -61,29 +61,78 @@
     </header>
 
     <!-- ── Post list ────────────────────────────────────────── -->
-    <ul class="post-list">
-      
-      <li class="post-list-item">
-        <time class="post-date" datetime="2026-04-23">
-          Apr 23, 2026
-        </time>
-        <div class="post-list-body">
-          <a href="/ko/posts/how-i-got-cves-with-ai/" class="post-list-title">평범한 사람인 내가 1류 해커를 따라해서 CVE를 발급 받은 경험(부제:야, 너두 할 수 있어)</a>
-          
-          <p class="post-list-desc">AI를 활용해서 TanStack Query와 Apache Airflow에서 취약점을 발견하고 CVE를 발급받은 이야기.</p>
-          
-          
-          <div class="post-list-tags">
-            <span class="post-tag">CVE</span><span class="post-tag">AI</span><span class="post-tag">Bug Hunting</span><span class="post-tag">Claude</span><span class="post-tag">오픈소스</span>
-          </div>
-          
-        </div>
-      </li>
-      
-    </ul>
-
     
-  </div>
+      <div class="post-filter" role="tablist">
+        <button class="post-filter-btn active" data-filter="all" type="button">
+          전체
+        </button>
+        
+          
+          
+          
+          
+            <button class="post-filter-btn" data-filter="research" type="button">
+              연구
+            </button>
+          
+        
+          
+          
+          
+          
+            <button class="post-filter-btn" data-filter="htb" type="button">
+              Hack the Box
+            </button>
+          
+        
+          
+          
+          
+          
+        
+      </div>
+
+      
+      <ul class="post-list">
+        
+        <li class="post-list-item" data-category="htb">
+          <time class="post-date" datetime="2026-04-29">
+            Apr 29, 2026
+          </time>
+          <div class="post-list-body">
+            <a href="/ko/posts/htb-devarea/" class="post-list-title">Hack The Box — DevArea Writeup</a>
+            
+            <p class="post-list-desc">난이도: Medium</p>
+            
+            
+            <div class="post-list-tags">
+              <span class="post-tag">HackTheBox</span><span class="post-tag">Linux</span><span class="post-tag">SUID</span><span class="post-tag">Privilege Escalation</span>
+            </div>
+            
+          </div>
+        </li>
+        
+        <li class="post-list-item" data-category="research">
+          <time class="post-date" datetime="2026-04-23">
+            Apr 23, 2026
+          </time>
+          <div class="post-list-body">
+            <a href="/ko/posts/how-i-got-cves-with-ai/" class="post-list-title">평범한 사람인 내가 1류 해커를 따라해서 CVE를 발급 받은 경험(부제:야, 너두 할 수 있어)</a>
+            
+            <p class="post-list-desc">AI를 활용해서 TanStack Query와 Apache Airflow에서 취약점을 발견하고 CVE를 발급받은 이야기.</p>
+            
+            
+            <div class="post-list-tags">
+              <span class="post-tag">CVE</span><span class="post-tag">AI</span><span class="post-tag">Bug Hunting</span><span class="post-tag">Claude</span><span class="post-tag">오픈소스</span>
+            </div>
+            
+          </div>
+        </li>
+        
+      </ul>
+
+      <p class="post-empty post-empty-filtered" hidden>No posts in this category yet.</p>
+    
 
   <!-- ── Footer ───────────────────────────────────────────── -->
   <footer class="site-footer">
@@ -91,5 +140,36 @@
   </footer>
 
   <script src="/assets/script.js"></script>
+  <script>
+  (function() {
+    const buttons = document.querySelectorAll('.post-filter-btn');
+    const items = document.querySelectorAll('.post-list-item');
+    const emptyMsg = document.querySelector('.post-empty-filtered');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        buttons.forEach(b => b.classList.toggle('active', b === btn));
+
+        let visible = 0;
+        items.forEach(item => {
+          const show = filter === 'all' || item.dataset.category === filter;
+          if (show) {
+            item.style.display = '';
+            item.style.animation = 'none';
+            void item.offsetWidth;
+            item.style.animation = 'fadeInUp 0.8s ease forwards';
+            visible++;
+          } else {
+            item.style.display = 'none';
+            item.style.animation = '';
+          }
+        });
+
+        if (emptyMsg) emptyMsg.hidden = visible > 0;
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

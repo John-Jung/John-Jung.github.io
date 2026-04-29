@@ -9,6 +9,8 @@ labels:
   certifications: "Certifications"
   present: "Present"
 
+all_label: "All"
+
 hero:
   name: "Sungwuk Jung"
   role: "Security Researcher"
@@ -265,3 +267,7 @@ blog_posts:
     url: "https://idont.kr/posts/how-i-got-cves-with-ai/"
     year: 2026
 
+categories:
+  research: "Research"
+  htb: "Hack the Box"
+  misc: "Miscellaneous"

@@ -9,6 +9,8 @@ labels:
   certifications: "资格证书"
   present: "至今"
 
+all_label: "全部"
+
 hero:
   name: "郑圣煜"
   role: "Security Researcher"
@@ -257,3 +259,9 @@ blog_posts:
   - title: "一个普通人模仿顶级黑客获得 CVE 的经历 (副标题：你也得做到！)"
     url: "https://idont.kr/zh/posts/how-i-got-cves-with-ai/"
     year: 2026
+
+
+categories:
+  research: "研究"
+  htb: "Hack the Box"
+  misc: "其他"

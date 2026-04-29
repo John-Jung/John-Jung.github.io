@@ -9,6 +9,8 @@ labels:
   certifications: "자격증"
   present: "현재"
 
+all_label: "전체"
+
 hero:
   name: "정성욱"
   role: "Security Researcher"
@@ -258,3 +260,8 @@ blog_posts:
   - title: "평범한 사람인 내가 1류 해커를 따라해서 CVE를 발급 받은 경험(부제:야! 너두 할 수 있어)"
     url: "https://idont.kr/ko/posts/how-i-got-cves-with-ai/"
     year: 2026
+
+categories:
+  research: "연구"
+  htb: "Hack the Box"
+  misc: "기타"

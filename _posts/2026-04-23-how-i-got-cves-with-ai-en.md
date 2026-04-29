@@ -5,6 +5,7 @@ description: "How I used AI to find vulnerabilities in TanStack Query and Apache
 date: 2026-04-23
 lang: en
 permalink: /en/posts/how-i-got-cves-with-ai/
+category: research
 tags: [CVE, AI, Bug Hunting, Claude, Open Source]
 ---
 
