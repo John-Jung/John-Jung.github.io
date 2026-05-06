@@ -1,0 +1,74 @@
+<svg width="100%" viewBox="0 0 680 520" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>KelpDAO three-layer architecture</title>
+  <desc>On-chain smart contracts trust the DVN, the DVN trusts the RPC layer. Each layer trusts the layer below it.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      .ff { font-family: "Anthropic Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .layer-frame { fill: none; stroke: rgb(180, 178, 169); stroke-width: 0.5; stroke-dasharray: 4 3; }
+      .layer-title { fill: rgb(250, 249, 245); font-size: 14px; font-weight: 500; }
+      .layer-sub   { fill: rgb(194, 192, 182); font-size: 12px; }
+      .box-blue   { fill: rgb(12, 68, 124);  stroke: rgb(133, 183, 235); stroke-width: 0.5; }
+      .box-amber  { fill: rgb(99, 56, 6);    stroke: rgb(239, 159, 39);  stroke-width: 0.5; }
+      .box-gray   { fill: rgb(68, 68, 65);   stroke: rgb(180, 178, 169); stroke-width: 0.5; }
+      .t-blue-1   { fill: rgb(181, 212, 244); font-size: 14px; font-weight: 500; }
+      .t-blue-2   { fill: rgb(133, 183, 235); font-size: 12px; }
+      .t-amber-1  { fill: rgb(250, 199, 117); font-size: 14px; font-weight: 500; }
+      .t-amber-2  { fill: rgb(239, 159, 39);  font-size: 12px; }
+      .t-gray-1   { fill: rgb(211, 209, 199); font-size: 14px; font-weight: 500; }
+      .t-gray-2   { fill: rgb(180, 178, 169); font-size: 12px; }
+      .edge       { stroke: rgb(180, 178, 169); stroke-width: 1; fill: none; }
+      .edge-label { fill: rgb(194, 192, 182); font-size: 12px; }
+    </style>
+  </defs>
+
+  <!-- =========== ON-CHAIN LAYER (top) =========== -->
+  <rect class="layer-frame" x="30" y="30" width="620" height="130" rx="12"/>
+  <text class="ff layer-title" x="46" y="52">On-chain layer</text>
+  <text class="ff layer-sub"   x="46" y="70">Smart contracts on Ethereum (audited, behaved per spec)</text>
+
+  <!-- EndpointV2 -->
+  <rect class="box-blue" x="80" y="92" width="220" height="56" rx="8"/>
+  <text class="ff t-blue-1" x="190" y="114" text-anchor="middle">EndpointV2</text>
+  <text class="ff t-blue-2" x="190" y="132" text-anchor="middle">Verifies DVN signature</text>
+
+  <!-- OFTAdapter -->
+  <rect class="box-blue" x="380" y="92" width="220" height="56" rx="8"/>
+  <text class="ff t-blue-1" x="490" y="114" text-anchor="middle">rsETH OFTAdapter</text>
+  <text class="ff t-blue-2" x="490" y="132" text-anchor="middle">Releases escrow on lzReceive</text>
+
+  <!-- EndpointV2 -> OFTAdapter (internal) -->
+  <line class="edge" x1="300" y1="120" x2="380" y2="120" marker-end="url(#arrow)"/>
+
+  <!-- =========== DVN LAYER (middle) =========== -->
+  <rect class="layer-frame" x="30" y="200" width="620" height="120" rx="12"/>
+  <text class="ff layer-title" x="46" y="222">DVN layer</text>
+  <text class="ff layer-sub"   x="46" y="240">Off-chain validator service (single 1-of-1 quorum)</text>
+
+  <rect class="box-amber" x="220" y="252" width="240" height="56" rx="8"/>
+  <text class="ff t-amber-1" x="340" y="274" text-anchor="middle">LayerZero Labs DVN</text>
+  <text class="ff t-amber-2" x="340" y="292" text-anchor="middle">Polls RPC, signs attestations</text>
+
+  <!-- =========== RPC LAYER (bottom) =========== -->
+  <rect class="layer-frame" x="30" y="360" width="620" height="120" rx="12"/>
+  <text class="ff layer-title" x="46" y="382">RPC layer</text>
+  <text class="ff layer-sub"   x="46" y="400">Unichain node infrastructure (op-geth, with failover)</text>
+
+  <rect class="box-gray" x="220" y="412" width="240" height="56" rx="8"/>
+  <text class="ff t-gray-1" x="340" y="434" text-anchor="middle">Unichain RPC pool</text>
+  <text class="ff t-gray-2" x="340" y="452" text-anchor="middle">Multiple endpoints, priority + failover</text>
+
+  <!-- Arrow: RPC -> DVN (state queries) -->
+  <line class="edge" x1="340" y1="412" x2="340" y2="308" marker-end="url(#arrow)"/>
+  <text class="ff edge-label" x="350" y="364">state queries</text>
+
+  <!-- Arrow: DVN -> EndpointV2 (signed attestation) -->
+  <line class="edge" x1="340" y1="252" x2="340" y2="160" marker-end="url(#arrow)"/>
+  <text class="ff edge-label" x="350" y="208">signed attestation</text>
+
+  <!-- Side note: trust direction -->
+  <text class="ff layer-sub" x="654" y="245" text-anchor="end" style="font-style:italic">Each layer trusts the layer below it ↓</text>
+</svg>

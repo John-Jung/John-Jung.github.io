@@ -1,0 +1,138 @@
+<svg width="100%" viewBox="0 0 880 920" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>KelpDAO attack sequence</title>
+  <desc>Sequence of messages between attacker, RPC pool, DVN, EndpointV2, and OFTAdapter that produced the exploit.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      .ff { font-family: "Anthropic Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .actor-red   { fill: rgb(121, 31, 31); stroke: rgb(240, 149, 149); stroke-width: 0.5; }
+      .actor-gray  { fill: rgb(68, 68, 65);  stroke: rgb(180, 178, 169); stroke-width: 0.5; }
+      .actor-amber { fill: rgb(99, 56, 6);   stroke: rgb(239, 159, 39);  stroke-width: 0.5; }
+      .actor-blue  { fill: rgb(12, 68, 124); stroke: rgb(133, 183, 235); stroke-width: 0.5; }
+      .a-red-t   { fill: rgb(247, 193, 193); font-size: 13px; font-weight: 500; }
+      .a-gray-t  { fill: rgb(211, 209, 199); font-size: 13px; font-weight: 500; }
+      .a-amber-t { fill: rgb(250, 199, 117); font-size: 13px; font-weight: 500; }
+      .a-blue-t  { fill: rgb(181, 212, 244); font-size: 13px; font-weight: 500; }
+      .lifeline      { stroke: rgb(180, 178, 169); stroke-width: 0.5; stroke-dasharray: 3 4; }
+      .msg-default { stroke: rgb(180, 178, 169); stroke-width: 1; fill: none; }
+      .msg-attack  { stroke: rgb(163, 45, 45);   stroke-width: 1; fill: none; }
+      .msg-lie     { stroke: rgb(239, 159, 39);  stroke-width: 1; fill: none; }
+      .msg-label    { fill: rgb(211, 209, 199); font-size: 12px; }
+      .msg-label-r  { fill: rgb(240, 149, 149); font-size: 12px; }
+      .msg-label-a  { fill: rgb(250, 199, 117); font-size: 12px; }
+      .section-band { fill: rgb(40, 39, 36); stroke: rgb(100, 98, 92); stroke-width: 0.5; }
+      .section-text { fill: rgb(194, 192, 182); font-size: 11px; font-style: italic; }
+      .self-msg     { stroke: rgb(180, 178, 169); stroke-width: 1; fill: none; }
+    </style>
+  </defs>
+
+  <!-- ===== Actor headers (top) ===== -->
+  <!-- Attacker -->
+  <rect class="actor-red"   x="30"  y="30" width="120" height="44" rx="8"/>
+  <text class="ff a-red-t"  x="90"  y="56" text-anchor="middle">Attacker</text>
+  <!-- RPC pool -->
+  <rect class="actor-gray"  x="200" y="30" width="140" height="44" rx="8"/>
+  <text class="ff a-gray-t" x="270" y="50" text-anchor="middle">Unichain</text>
+  <text class="ff a-gray-t" x="270" y="66" text-anchor="middle" style="font-size:11px;font-weight:400">RPC pool</text>
+  <!-- DVN -->
+  <rect class="actor-amber" x="390" y="30" width="160" height="44" rx="8"/>
+  <text class="ff a-amber-t" x="470" y="50" text-anchor="middle">LayerZero Labs</text>
+  <text class="ff a-amber-t" x="470" y="66" text-anchor="middle" style="font-size:11px;font-weight:400">DVN</text>
+  <!-- EndpointV2 -->
+  <rect class="actor-blue"  x="600" y="30" width="120" height="44" rx="8"/>
+  <text class="ff a-blue-t" x="660" y="50" text-anchor="middle">EndpointV2</text>
+  <text class="ff a-blue-t" x="660" y="66" text-anchor="middle" style="font-size:11px;font-weight:400">Ethereum</text>
+  <!-- OFTAdapter -->
+  <rect class="actor-blue"  x="760" y="30" width="100" height="44" rx="8"/>
+  <text class="ff a-blue-t" x="810" y="50" text-anchor="middle">rsETH</text>
+  <text class="ff a-blue-t" x="810" y="66" text-anchor="middle" style="font-size:11px;font-weight:400">OFTAdapter</text>
+
+  <!-- ===== Lifelines ===== -->
+  <line class="lifeline" x1="90"  y1="74" x2="90"  y2="900"/>
+  <line class="lifeline" x1="270" y1="74" x2="270" y2="900"/>
+  <line class="lifeline" x1="470" y1="74" x2="470" y2="900"/>
+  <line class="lifeline" x1="660" y1="74" x2="660" y2="900"/>
+  <line class="lifeline" x1="810" y1="74" x2="810" y2="900"/>
+
+  <!-- ===== Section: Pre-attack ===== -->
+  <rect class="section-band" x="20" y="92" width="850" height="22" rx="4"/>
+  <text class="ff section-text" x="34" y="107">Pre-attack — infrastructure preparation</text>
+
+  <!-- 1. A -> RPC: replace op-geth -->
+  <line class="msg-attack" x1="90" y1="138" x2="270" y2="138" marker-end="url(#arrow)"/>
+  <text class="ff msg-label-r" x="180" y="132" text-anchor="middle">Replace op-geth on 2 nodes (poisoned binaries)</text>
+
+  <!-- 2. A -> RPC: DDoS healthy nodes -->
+  <line class="msg-attack" x1="90" y1="168" x2="270" y2="168" marker-end="url(#arrow)"/>
+  <text class="ff msg-label-r" x="180" y="162" text-anchor="middle">DDoS 2 healthy higher-priority nodes</text>
+
+  <!-- Note: failover lands on poisoned nodes -->
+  <rect x="200" y="184" width="540" height="22" rx="4" fill="rgb(54, 41, 18)" stroke="rgb(140, 100, 40)" stroke-width="0.5"/>
+  <text class="ff msg-label-a" x="470" y="199" text-anchor="middle">Note — DVN's failover logic now lands on poisoned nodes</text>
+
+  <!-- ===== Section: Attack execution ===== -->
+  <rect class="section-band" x="20" y="226" width="850" height="22" rx="4"/>
+  <text class="ff section-text" x="34" y="241">Attack execution</text>
+
+  <!-- 3. A -> EP: lzReceive forged packet -->
+  <line class="msg-attack" x1="90" y1="280" x2="660" y2="280" marker-end="url(#arrow)"/>
+  <text class="ff msg-label-r" x="375" y="274" text-anchor="middle">Submit lzReceive() with forged packet (claims burn happened on Unichain)</text>
+
+  <!-- 4. EP -> DVN: need attestation -->
+  <line class="msg-default" x1="660" y1="312" x2="470" y2="312" marker-end="url(#arrow)"/>
+  <text class="ff msg-label" x="565" y="306" text-anchor="middle">Need attestation for this packet</text>
+
+  <!-- 5. DVN -> RPC: query unichain state -->
+  <line class="msg-default" x1="470" y1="344" x2="270" y2="344" marker-end="url(#arrow)"/>
+  <text class="ff msg-label" x="370" y="338" text-anchor="middle">Query Unichain state (does this burn exist?)</text>
+
+  <!-- 6. RPC -> DVN: lie -->
+  <line class="msg-lie" x1="270" y1="376" x2="470" y2="376" marker-end="url(#arrow)"/>
+  <text class="ff msg-label-a" x="370" y="370" text-anchor="middle">"Yes, burn exists" — fabricated response (LIE)</text>
+
+  <!-- 7. DVN -> EP: signed attestation -->
+  <line class="msg-default" x1="470" y1="408" x2="660" y2="408" marker-end="url(#arrow)"/>
+  <text class="ff msg-label" x="565" y="402" text-anchor="middle">Signed attestation (cryptographically valid)</text>
+
+  <!-- 8. EP -> EP: signature verification self-loop (loop LEFT to keep text in viewport) -->
+  <path class="self-msg" d="M 660 432 h -40 v 24 h 40" marker-end="url(#arrow)"/>
+  <text class="ff msg-label" x="615" y="447" text-anchor="end">Signature verification passes ✓</text>
+
+  <!-- 9. EP -> OFT: deliver message -->
+  <line class="msg-default" x1="660" y1="488" x2="810" y2="488" marker-end="url(#arrow)"/>
+  <text class="ff msg-label" x="735" y="482" text-anchor="middle">Deliver message</text>
+
+  <!-- 10. OFT -> A: release escrow -->
+  <path class="msg-attack" d="M 810 520 Q 450 540 90 520" marker-end="url(#arrow)" fill="none"/>
+  <text class="ff msg-label-r" x="450" y="520" text-anchor="middle">Release 116,500 rsETH from escrow</text>
+
+  <!-- ===== Section: Post-exploit (46-min window) ===== -->
+  <rect class="section-band" x="20" y="558" width="850" height="22" rx="4"/>
+  <text class="ff section-text" x="34" y="573">Post-exploit — 46-minute window before detection</text>
+
+  <!-- 11. A -> A self: deposit on Aave -->
+  <path class="self-msg" d="M 90 612 h 40 v 24 h -40" marker-end="url(#arrow)" stroke="rgb(163, 45, 45)"/>
+  <text class="ff msg-label-r" x="138" y="627">Deposit rsETH as collateral on Aave</text>
+
+  <!-- 12. A -> A self: borrow WETH -->
+  <path class="self-msg" d="M 90 668 h 40 v 24 h -40" marker-end="url(#arrow)" stroke="rgb(163, 45, 45)"/>
+  <text class="ff msg-label-r" x="138" y="683">Borrow WETH (~$236M potential 2nd-order loss)</text>
+
+  <!-- ===== Outcome summary ===== -->
+  <rect x="100" y="730" width="680" height="50" rx="8" fill="rgb(121, 31, 31)" stroke="rgb(240, 149, 149)" stroke-width="0.5"/>
+  <text class="ff a-red-t" x="440" y="752" text-anchor="middle">Result: 116,500 rsETH (~$292M) released without backing ETH</text>
+  <text class="ff" x="440" y="770" text-anchor="middle" style="fill:rgb(240,149,149);font-size:12px">All cryptographic checks passed — system failed at the trust boundary</text>
+
+  <!-- Legend -->
+  <rect x="30"  y="820" width="12" height="12" rx="2" fill="rgb(163, 45, 45)"/>
+  <text class="ff" x="48"  y="831" style="fill:rgb(194,192,182);font-size:11px">Attacker action</text>
+  <rect x="170" y="820" width="12" height="12" rx="2" fill="rgb(239, 159, 39)"/>
+  <text class="ff" x="188" y="831" style="fill:rgb(194,192,182);font-size:11px">Disrupted / fooled response</text>
+  <rect x="370" y="820" width="12" height="12" rx="2" fill="rgb(180, 178, 169)"/>
+  <text class="ff" x="388" y="831" style="fill:rgb(194,192,182);font-size:11px">Routine system message</text>
+
+  <text class="ff" x="30" y="876" style="fill:rgb(194,192,182);font-size:11px;font-style:italic">No new rsETH was minted. Existing escrow was released to a wallet that had not earned that release.</text>
+</svg>
