@@ -5,7 +5,7 @@ description: "security incident"
 date: 2026-05-02
 lang: en
 permalink: /en/posts/kelpdao-incident/
-category: research
+category: web3
 tags: [web3, research]
 ---
 

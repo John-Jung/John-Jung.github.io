@@ -5,7 +5,7 @@ description: "보안 사고 분석"
 date: 2026-05-02
 lang: ko
 permalink: /ko/posts/kelpdao-incident/
-category: research
+category: web3
 tags: [web3, research]
 ---
 
