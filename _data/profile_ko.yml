@@ -38,11 +38,20 @@ hero:
         icon: email
 
 experience:
-  - start: "2025-11"
+  - start: "2026-05"
     end: null
+    role: "보안 컨설턴트"
+    company: "스틸리언"
+    company_url: https://stealien.com/
+    location: "서울, 대한민국"
+    bullets:
+      - "웹/모바일 모의해킹"
+
+  - start: "2025-11"
+    end: "2026-05"
     role: "보안 연구원"
     company: "한국정보기술단"
-    company_url: null
+    company_url: https://audit.co.kr/news/
     location: "과천, 대한민국"
     bullets:
       - "주요 산업군 웹/모바일 모의해킹 및 레드팀 수행 — 정유사, 공공기관, 대학병원, 주요 기업"
@@ -65,7 +74,7 @@ experience:
     end: "2025-03"
     role: "모의해킹 컨설턴트"
     company: "핀시큐리티"
-    company_url: null
+    company_url: http://www.finss.co.kr/
     location: "서울, 대한민국"
     bullets:
       - "규제 산업군 웹/모바일 모의해킹 및 보안 컨설팅 수행 — 금융, 제약, 결제, 크라우드펀딩"

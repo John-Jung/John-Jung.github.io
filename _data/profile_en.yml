@@ -38,11 +38,20 @@ hero:
         icon: email
 
 experience:
-  - start: "2025-11"
+  - start: "2026-05"
     end: null
+    role: "Security Consultant"
+    company: "Stealien"
+    company_url: https://stealien.com/
+    location: "Seoul, Korea"
+    bullets:
+      - "Penetration testing"
+
+  - start: "2025-11"
+    end: 2026-05
     role: "Security Researcher"
     company: "Korea Information Systems Consulting & Audit Co., Ltd."
-    company_url: null
+    company_url: https://audit.co.kr/news/
     location: "Gwacheon, Korea"
     bullets:
       - "Penetration testing (web / mobile) and red teaming across critical sectors — oil refinery, government institutions, university hospitals, and major enterprise companies"
@@ -65,7 +74,7 @@ experience:
     end: "2025-03"
     role: "Penetration Tester"
     company: "Fin Security"
-    company_url: null
+    company_url: http://finss.co.kr/
     location: "Seoul, Korea"
     bullets:
       - "Penetration testing (web / mobile) and security consulting across regulated industries — financial services, pharmaceutical, payment systems, and crowdfunding platforms"
