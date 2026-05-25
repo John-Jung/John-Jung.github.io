@@ -132,7 +132,7 @@ mirth의 credential 확인
 ![](/assets/posts/htb-interpreter/19.png)
 
 Hashcat mode 10900(PBKDF2-HMAC-SHA256)의 형식<br>
-sha256:<\iterations>:<\base64_salt>:<\base64_hash><br>
+sha256:`&lt;iterations&gt;`:`&lt;base64_salt&gt`;:`&lt;base64_hash&gt;`<br>
 여기서 iteration count(반복 횟수)인 600000 은 최신 Mirth Connect 에서 사용하는 표준 PBKDF2 설정이다.<br>
 
 hash cracking을 위에 형식을 저장한다.<br>

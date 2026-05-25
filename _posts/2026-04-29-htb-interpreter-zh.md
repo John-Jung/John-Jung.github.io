@@ -132,7 +132,7 @@ tags: [HackTheBox, Linux, SUID, Privilege Escalation]
 ![](/assets/posts/htb-interpreter/19.png)
 
 Hashcat mode 10900(PBKDF2-HMAC-SHA256)的格式:<br>
-sha256:&lt;iterations&gt;:&lt;base64_salt&gt;:&lt;base64_hash&gt;<br>
+sha256:`&lt;iterations&gt;`:`&lt;base64_salt&gt`;:`&lt;base64_hash&gt;`<br>
 其中迭代次数 600000 是最新版 Mirth Connect 使用的标准 PBKDF2 配置。<br>
 
 按上述格式保存以便进行哈希破解。<br>

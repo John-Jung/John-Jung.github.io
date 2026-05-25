@@ -132,7 +132,7 @@ Base64-encoded hash:
 ![](/assets/posts/htb-interpreter/19.png)
 
 Hashcat mode 10900 (PBKDF2-HMAC-SHA256) format:<br>
-sha256:&lt;iterations&gt;:&lt;base64_salt&gt;:&lt;base64_hash&gt;<br>
+sha256:`&lt;iterations&gt;`:`&lt;base64_salt&gt`;:`&lt;base64_hash&gt`;<br>
 The iteration count of 600000 is the standard PBKDF2 setting used by recent versions of Mirth Connect.<br>
 
 Save the value in the format above for hash cracking.<br>
