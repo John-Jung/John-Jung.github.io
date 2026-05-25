@@ -13,7 +13,7 @@ all_label: "All"
 
 hero:
   name: "Sungwuk Jung"
-  role: "Security Researcher"
+  role: "Security Consultant"
   avatar: "/assets/profile.jpg"
   description: >
     I'm Sungwuk, a Security Researcher with a passion for breaking things to make them safer! I'm currently focusing on Web/Mobile Penetration Testing and Red Teaming — always hunting for vulnerabilities and pushing security boundaries.

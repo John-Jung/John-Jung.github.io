@@ -13,7 +13,7 @@ all_label: "전체"
 
 hero:
   name: "정성욱"
-  role: "Security Researcher"
+  role: "Security Consultant"
   avatar: "/assets/profile.jpg"
   description: >
     안녕하세요, 보안 연구원으로 활동하고 있는 정성욱입니다. 현재 웹/모바일 모의해킹과 레드팀 업무에 집중하고 있으며, 항상 새로운 취약점을 탐색하고 보안의 경계를 넓혀가고 있습니다.
