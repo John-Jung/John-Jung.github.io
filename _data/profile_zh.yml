@@ -207,9 +207,27 @@ vulnerabilities:
   - category: "bugbounty"
     vendor: "KISA"
     vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2026-0269"
+    type: "Email Spoofing"
+    title: "Email Spoofing  Attack"
+    description: ""
+    links: []
+
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2025-2831"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
+    description: ""
+    links: []
+    
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
     cve: "KVE-2025-2839"
-    type: "业务逻辑绕过"
-    title: "向韩国互联网振兴院 (KISA) 提交的业务逻辑绕过漏洞"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
     description: ""
     links: []
 
@@ -217,8 +235,8 @@ vulnerabilities:
     vendor: "KISA"
     vendor_logo: "/assets/vendors/KisaLogo.svg"
     cve: "KVE-2024-2169"
-    type: "存储型 XSS"
-    title: "向韩国互联网振兴院 (KISA) 提交的存储型 XSS 漏洞"
+    type: "Stored XSS"
+    title: "Stored XSS"
     description: ""
     links: []
 
@@ -227,7 +245,7 @@ vulnerabilities:
     vendor_logo: "/assets/vendors/KFSI_Logo.svg"
     cve: "FVE-2025-0023"
     type: "IDOR"
-    title: "向韩国金融安全院提交的不安全直接对象引用 (IDOR) 漏洞"
+    title: "IDOR"
     description: ""
     links: []
 
@@ -235,8 +253,8 @@ vulnerabilities:
     vendor: "FindtheGap"
     vendor_logo: "/assets/vendors/findgap_logo.jpg"
     cve: "FVE-2026-24b7-74085"
-    type: "业务逻辑绕过"
-    title: "通过 FindtheGap 提交的业务逻辑绕过漏洞"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
     description: ""
     links: []
 
@@ -244,8 +262,8 @@ vulnerabilities:
     vendor: "FindtheGap"
     vendor_logo: "/assets/vendors/findgap_logo.jpg"
     cve: "FVE-2026-24b7-74084"
-    type: "业务逻辑绕过"
-    title: "通过 FindtheGap 提交的业务逻辑绕过漏洞"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
     description: ""
     links: []
 
@@ -253,8 +271,8 @@ vulnerabilities:
     vendor: "FindtheGap"
     vendor_logo: "/assets/vendors/findgap_logo.jpg"
     cve: "FVE-2025-24b7-73585"
-    type: "信息泄露"
-    title: "通过 FindtheGap 提交的信息泄露漏洞"
+    type: "Information Disclosure"
+    title: "Information Disclosure"
     description: ""
     links: []
 

@@ -208,9 +208,27 @@ vulnerabilities:
   - category: "bugbounty"
     vendor: "KISA"
     vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2026-0269"
+    type: "Email Spoofing"
+    title: "Email Spoofing  Attack"
+    description: ""
+    links: []
+
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2025-2831"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
+    description: ""
+    links: []
+    
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
     cve: "KVE-2025-2839"
-    type: "비즈니스 로직 우회"
-    title: "한국인터넷진흥원(KISA)에 제보한 비즈니스 로직 우회 취약점"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
     description: ""
     links: []
 
@@ -219,7 +237,7 @@ vulnerabilities:
     vendor_logo: "/assets/vendors/KisaLogo.svg"
     cve: "KVE-2024-2169"
     type: "Stored XSS"
-    title: "한국인터넷진흥원(KISA)에 제보한 Stored XSS 취약점"
+    title: "Stored XSS"
     description: ""
     links: []
 
@@ -228,7 +246,7 @@ vulnerabilities:
     vendor_logo: "/assets/vendors/KFSI_Logo.svg"
     cve: "FVE-2025-0023"
     type: "IDOR"
-    title: "금융보안원에 제보한 비인가 객체 직접 참조(IDOR) 취약점"
+    title: "IDOR"
     description: ""
     links: []
 
@@ -236,8 +254,8 @@ vulnerabilities:
     vendor: "FindtheGap"
     vendor_logo: "/assets/vendors/findgap_logo.jpg"
     cve: "FVE-2026-24b7-74085"
-    type: "비즈니스 로직 우회"
-    title: "파인드갭을 통해 제보한 비즈니스 로직 우회 취약점"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
     description: ""
     links: []
 
@@ -245,8 +263,8 @@ vulnerabilities:
     vendor: "FindtheGap"
     vendor_logo: "/assets/vendors/findgap_logo.jpg"
     cve: "FVE-2026-24b7-74084"
-    type: "비즈니스 로직 우회"
-    title: "파인더갭을 통해 제보한 비즈니스 로직 우회 취약점"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
     description: ""
     links: []
 
@@ -254,8 +272,8 @@ vulnerabilities:
     vendor: "FindtheGap"
     vendor_logo: "/assets/vendors/findgap_logo.jpg"
     cve: "FVE-2025-24b7-73585"
-    type: "정보 노출"
-    title: "파인더갭을 통해 제보한 정보 노출 취약점"
+    type: "Information Disclosure"
+    title: "Information Disclosure"
     description: ""
     links: []
 
