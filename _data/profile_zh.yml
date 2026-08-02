@@ -210,6 +210,15 @@ vulnerabilities:
   - category: "bugbounty"
     vendor: "KISA"
     vendor_logo: "/assets/vendors/KisaLogo.svg"
+    cve: "KVE-2026-xxxx"
+    type: "Information Disclosure"
+    title: "Information Disclosure"
+    description: ""
+    links: []
+      
+  - category: "bugbounty"
+    vendor: "KISA"
+    vendor_logo: "/assets/vendors/KisaLogo.svg"
     cve: "KVE-2026-0269"
     type: "Email Spoofing"
     title: "Email Spoofing  Attack"
