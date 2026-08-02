@@ -40,12 +40,15 @@ hero:
 experience:
   - start: "2026-05"
     end: null
-    role: "Security Consultant"
+    role: "安全顾问"
     company: "Stealien"
     company_url: https://stealien.com/
-    location: "首尔, 韩国"
+    location: "韩国首尔"
     bullets:
-      - "渗透测试"
+      - "面向金融科技/金融机构、公共机构、游戏公司等的 Web/移动端渗透测试"
+      - "电子金融基础设施 / 主要信息通信基础设施漏洞诊断"
+      - "支持 ISMS 认证审查项目"
+      - "利用 1-day 漏洞"
 
   - start: "2025-11"
     end: 2026-05

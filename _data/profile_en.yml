@@ -43,9 +43,12 @@ experience:
     role: "Security Consultant"
     company: "Stealien"
     company_url: https://stealien.com/
-    location: "Seoul, Korea"
+    location: "Seoul, South Korea"
     bullets:
-      - "Penetration testing"
+      - "Web/mobile penetration testing for fintech, financial institutions, public agencies, and game companies"
+      - "Vulnerability assessments of electronic financial infrastructure and critical information & communications infrastructure"
+      - "Supported ISMS certification audit projects"
+      - "Leveraged 1-day vulnerabilities"
 
   - start: "2025-11"
     end: 2026-05
