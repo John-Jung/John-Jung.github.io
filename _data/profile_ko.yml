@@ -58,20 +58,10 @@ experience:
     location: "과천, 대한민국"
     bullets:
       - "주요 산업군 웹/모바일 모의해킹 수행 — 정유사, 공공기관, 대학병원, 주요 기업"
+      - "침투테스트"
       - "1-day 취약점 활용"
       - "ISMS 인증 지원을 위한 종합 보안 점검 수행"
 
-  - start: "2025-06"
-    end: "2025-09"
-    role: "보안 컨설턴트"
-    company: "블루팀케이"
-    company_url: null
-    location: "서울, 대한민국"
-    bullets:
-      - "인프라 취약점 진단 스크립트 설계 및 구현"
-      - "글로벌 보안 사고 분석 및 PoC 시연 구축"
-      - "FAIR 방법론 기반 정량적 위험 평가 연구 및 적용"
-      - "기술 제안서 및 사업 제안서 작성 주도"
 
   - start: "2024-12"
     end: "2025-03"
@@ -134,12 +124,6 @@ projects:
     tags: ["Cloud", "Pentest", "Burp Suite", "Metasploit", "Frida"]
 
 education:
-  - start: "2024-02"
-    end: "2024-08"
-    degree: "클라우드 보안 전문가 과정"
-    school: "SK쉴더스 루키즈 19기"
-    location: "대한민국 서울"
-    note: ""
 
   - start: "2018-03"
     end: "2024-02"
@@ -208,6 +192,15 @@ vulnerabilities:
         url: "https://github.com/John-Jung/CVE-2026-26903-PoC"
 
   # ── 버그바운티 & 기타 ──────────────────────────────
+  - category: "bugbounty"
+    vendor: "Kakao"
+    vendor_logo: "/assets/vendors/KakaoLogo.ico"
+    cve: "KV-2026-376"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
+    description: ""
+    links: []
+
   - category: "bugbounty"
     vendor: "KISA"
     vendor_logo: "/assets/vendors/KisaLogo.svg"

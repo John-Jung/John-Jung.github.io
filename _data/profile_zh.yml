@@ -61,17 +61,6 @@ experience:
       - "红队攻防任务执行及 1-day 漏洞利用"
       - "ISMS 认证支持，开展综合安全评估"
 
-  - start: "2025-06"
-    end: "2025-09"
-    role: "Security Consultant"
-    company: "BlueTeamK"
-    company_url: null
-    location: "首尔, 韩国"
-    bullets:
-      - "设计并实现基础设施漏洞评估脚本"
-      - "分析全球安全事件并构建 PoC 演示"
-      - "研究并应用 FAIR 方法论进行定量风险评估"
-      - "主导技术方案及商务提案的编写"
 
   - start: "2024-12"
     end: "2025-03"
@@ -134,12 +123,6 @@ projects:
     tags: ["Cloud", "Pentest", "Burp Suite", "Metasploit", "Frida"]
 
 education:
-  - start: "2024-02"
-    end: "2024-08"
-    degree: "云安全专家课程"
-    school: "SK Shieldus Rookies 19期"
-    location: "韩国 首尔"
-    note: ""
 
   - start: "2018-03"
     end: "2024-02"
@@ -208,11 +191,11 @@ vulnerabilities:
 
   # ── 漏洞赏金 & 其他 ──────────────────────────────
   - category: "bugbounty"
-    vendor: "KISA"
-    vendor_logo: "/assets/vendors/KisaLogo.svg"
-    cve: "KVE-2026-xxxx"
-    type: "Information Disclosure"
-    title: "Information Disclosure"
+    vendor: "Kakao"
+    vendor_logo: "/assets/vendors/KakaoLogo.ico"
+    cve: "KV-2026-376"
+    type: "Business Logic Bypass"
+    title: "Business Logic Bypass"
     description: ""
     links: []
       
